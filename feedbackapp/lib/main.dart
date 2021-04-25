@@ -196,11 +196,80 @@ class _FeedbackState extends State<Feedback> {
         Divider(thickness: 2),
 
         Container(
-          width: MediaQuery.of(context).size.width * 1,  //take entire screen width
-          color: Colors.amber,
-          child: Text("Hey Whats up its been a while ")
-        )
+          padding: EdgeInsets.all(10),
+          child: Text(
+            "Transaction Health",
+            style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
+            textAlign: TextAlign.left,
+          ),
+        ),
+        //Toggle Button Container
+        Container(
+            padding: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                ToggleButtons(children: [
+                  //using different buttons
+                  Container(
+                      //conatiner for 1 button
+                      padding: EdgeInsets.all(10),
+                      width: (MediaQuery.of(context).size.width - 30) / 3,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.thumb_up_alt_outlined,
+                            color: Colors.green,
+                          ),
+                          Text("Good")
+                        ],
+                      )),
+                  Container(
+                      //conatiner for 1 button
+                      width: (MediaQuery.of(context).size.width - 30) / 3,
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          MaterialButton(  //used to make circul against icon in button
+                            onPressed: null,
+                            disabledColor: Colors.amber,
+                            child: Icon(
+                              Icons.thumb_down_alt_outlined,
+                              color: Colors.black,
+                            ),
+                            padding: EdgeInsets.all(12),
+                            shape: CircleBorder(),
+                          ),
+                          Text(
+                            "Ok",
+                            style: TextStyle(color: Colors.black),),
+                        ],
+                      )),
+                  Container(
+                      //conatiner for 1 button
+                      width: (MediaQuery.of(context).size.width - 30) / 3,
+                      padding: EdgeInsets.all(10),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: [
+                          Icon(
+                            Icons.thumb_down_alt_outlined,
+                            color: Colors.red,
+                          ),
+                          Text("Bad")
+                        ],
+                      )),
+                ], isSelected: _ifSelected)
+              ],
+            )),
 
+        // Container(
+        //   width: MediaQuery.of(context).size.width * 1,  //take entire screen width
+        //   color: Colors.amber,
+        //   child: Text("Hey Whats up its been a while ")
+        // )
       ],
     ));
   }
@@ -239,15 +308,14 @@ class _checkBoxMState extends State<checkBoxM> {
 //                           ),
 //                         ),
 
-
-                    // ToggleButtons(
-                    //   children: [
-                    //     Padding(
-                    //         padding: EdgeInsets.all(8), child: Text("Good")),
-                    //     Padding(
-                    //         padding: EdgeInsets.all(8), child: Text("Good")),
-                    //     Padding(
-                    //         padding: EdgeInsets.all(8), child: Text("Good")),
-                    //   ],
-                    //   isSelected: _ifSelected,
-                    // )
+// ToggleButtons(
+//   children: [
+//     Padding(
+//         padding: EdgeInsets.all(8), child: Text("Good")),
+//     Padding(
+//         padding: EdgeInsets.all(8), child: Text("Good")),
+//     Padding(
+//         padding: EdgeInsets.all(8), child: Text("Good")),
+//   ],
+//   isSelected: _ifSelected,
+// )
