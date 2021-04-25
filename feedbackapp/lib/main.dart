@@ -218,11 +218,20 @@ class _FeedbackState extends State<Feedback> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.thumb_up_alt_outlined,
-                            color: Colors.green,
+                           MaterialButton(  //used to make circul against icon in button
+                            onPressed: null,
+                            disabledColor: Colors.green,
+                            child: Icon(
+                              Icons.thumb_up_alt_outlined,
+                              color: Colors.white,
+                            ),
+                            padding: EdgeInsets.all(12),
+                            shape: CircleBorder(),
                           ),
-                          Text("Good")
+                          Text(
+                            "Good",
+                            style: TextStyle(color: Colors.black),
+                            ),
                         ],
                       )),
                   Container(
@@ -244,7 +253,8 @@ class _FeedbackState extends State<Feedback> {
                           ),
                           Text(
                             "Ok",
-                            style: TextStyle(color: Colors.black),),
+                            style: TextStyle(color: Colors.black),
+                            ),
                         ],
                       )),
                   Container(
@@ -254,11 +264,20 @@ class _FeedbackState extends State<Feedback> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Icon(
-                            Icons.thumb_down_alt_outlined,
-                            color: Colors.red,
+                           MaterialButton(  //used to make circul against icon in button
+                            onPressed: null,
+                            disabledColor: Colors.red,
+                            child: Icon(
+                              Icons.thumb_down_alt_outlined,
+                              color: Colors.white,
+                            ),
+                            padding: EdgeInsets.all(12),
+                            shape: CircleBorder(),
                           ),
-                          Text("Bad")
+                          Text(
+                            "Bad",
+                            style: TextStyle(color: Colors.black),
+                            ),
                         ],
                       )),
                 ], isSelected: _ifSelected)
