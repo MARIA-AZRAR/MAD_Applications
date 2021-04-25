@@ -130,47 +130,89 @@ class _FeedbackState extends State<Feedback> {
             padding: EdgeInsets.all(10),
             child: Column(
               crossAxisAlignment:
-                  CrossAxisAlignment.start, //Align elements to left
+                  CrossAxisAlignment.stretch, //Align elements to left
               children: [
                 Text(
                   "Transaction Types",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
-                Container(
-                  //button container
-                  child: Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.center, //Align elements to left
-                    children: [
-                      RaisedButton(
-                        padding: EdgeInsets.fromLTRB(12, 21, 12, 21),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(color: Colors.black),
+                Center(
+                  //to center buttons
+                  child: Container(
+                    width:
+                        196, //Specifying the container width so that with position buttons can move and overlap in container
+                    child: Stack(
+                      //using stack instead of column to overlap buttons
+                      children: [
+                        RaisedButton(
+                          padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                            side: BorderSide(color: Colors.black, width: 1.1),
+                          ),
+                          onPressed: () {},
+                          color: Colors.white,
+                          textColor: Colors.black,
+                          child:
+                              Text("Money In", style: TextStyle(fontSize: 15)),
                         ),
-                        onPressed: () {},
-                        color: Colors.white,
-                        textColor: Colors.black,
-                        child: Text("Money In", style: TextStyle(fontSize: 15)),
-                      ),
-                      RaisedButton(
-                        padding: EdgeInsets.fromLTRB(12, 21, 12, 21),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                          side: BorderSide(color: Colors.black),
+                        Positioned(
+                          //with the help of positioned button A can move freely
+                          right: 0,
+                          top: 0,
+                          child: RaisedButton(
+                            padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                              side: BorderSide(color: Colors.black, width: 1.1),
+                            ),
+                            onPressed: () {},
+                            color: Colors.white,
+                            textColor: Colors.black,
+                            child: Text("Money Out",
+                                style: TextStyle(fontSize: 15)),
+                          ),
                         ),
-                        onPressed: () {},
-                        color: Colors.white,
-                        textColor: Colors.black,
-                        child:
-                            Text("Money Out", style: TextStyle(fontSize: 15)),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
                 ),
               ],
             )),
+            checkBoxM(listValue:'Shop'),
+            checkBoxM(listValue:'Credit'),
+            checkBoxM(listValue:'Refund'),
+            checkBoxM(listValue:'Loan'),
+            checkBoxM(listValue:'Direct Material'),
+            checkBoxM(listValue:'Direct Labour'),
+            checkBoxM(listValue:'Asset'),
+            checkBoxM(listValue:'Other'),
+            checkBoxM(listValue:'OverHead'),
+
       ],
     );
+  }
+}
+
+
+class checkBoxM extends StatefulWidget {
+  checkBoxM({Key? key, required this.listValue}) : super(key: key);
+   final String listValue;
+  @override
+  _checkBoxMState createState() => _checkBoxMState();
+}
+
+class _checkBoxMState extends State<checkBoxM> {
+  bool checked = false;
+  @override
+  Widget build(BuildContext context) {
+    return CheckboxListTile(
+        title: Text(widget.listValue),
+        value: checked,
+        onChanged: (bool? val) {
+          setState(() {
+            checked = val!;
+          });
+        });
   }
 }
