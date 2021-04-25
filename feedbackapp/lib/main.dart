@@ -193,7 +193,7 @@ class _FeedbackState extends State<Feedback> {
         checkBoxM(listValue: 'Other'),
         checkBoxM(listValue: 'Overhead'),
 
-        Divider(thickness: 2),
+        Divider(),
 
         Container(
           padding: EdgeInsets.all(10),
@@ -207,9 +207,17 @@ class _FeedbackState extends State<Feedback> {
         Container(
             padding: EdgeInsets.all(10),
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
+             crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ToggleButtons(
+                  fillColor: Colors.blueGrey.shade300,
+                  splashColor: Colors.blue.shade100,
+                  borderColor: Colors.black,
+                  borderWidth: 1.7,
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(8)
+                  ),
+
                     children: [
                       //using different buttons
                       Container(
@@ -292,13 +300,22 @@ class _FeedbackState extends State<Feedback> {
                       });
                     })
               ],
-            )),
+            )
+          ),
 
-        // Container(
-        //   width: MediaQuery.of(context).size.width * 1,  //take entire screen width
-        //   color: Colors.amber,
-        //   child: Text("Hey Whats up its been a while ")
-        // )
+          Divider(),
+
+          checkBoxM(listValue: 'Consultant Notes Only'),
+
+          Divider(),
+
+          checkBoxM(listValue: 'Overdue Only'),
+
+          Divider(),
+
+          checkBoxM(listValue: 'Date Range'),
+
+
       ],
     ));
   }
