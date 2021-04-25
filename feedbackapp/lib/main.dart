@@ -1,3 +1,5 @@
+import 'dart:html';
+
 import 'package:flutter/material.dart';
 
 void main() {
@@ -82,10 +84,12 @@ class Feedback extends StatefulWidget {
 
 class _FeedbackState extends State<Feedback> {
   String dropdownvalue = 'Newest First';
+  List<bool> _ifSelected = [false, false, false];
 
   @override
   Widget build(BuildContext context) {
-    return Column(
+    return SingleChildScrollView(
+        child: Column(
       //Column for entire feedback form
       crossAxisAlignment: CrossAxisAlignment.start, //Align elements to left
       children: [
@@ -179,25 +183,32 @@ class _FeedbackState extends State<Feedback> {
                 ),
               ],
             )),
-            checkBoxM(listValue:'Shop'),
-            checkBoxM(listValue:'Credit'),
-            checkBoxM(listValue:'Refund'),
-            checkBoxM(listValue:'Loan'),
-            checkBoxM(listValue:'Direct Material'),
-            checkBoxM(listValue:'Direct Labour'),
-            checkBoxM(listValue:'Asset'),
-            checkBoxM(listValue:'Other'),
-            checkBoxM(listValue:'Overhead'),
+        checkBoxM(listValue: 'Shop'),
+        checkBoxM(listValue: 'Credit'),
+        checkBoxM(listValue: 'Refund'),
+        checkBoxM(listValue: 'Loan'),
+        checkBoxM(listValue: 'Direct Material'),
+        checkBoxM(listValue: 'Direct Labour'),
+        checkBoxM(listValue: 'Asset'),
+        checkBoxM(listValue: 'Other'),
+        checkBoxM(listValue: 'Overhead'),
+
+        Divider(thickness: 2),
+
+        Container(
+          width: MediaQuery.of(context).size.width * 1,  //take entire screen width
+          color: Colors.amber,
+          child: Text("Hey Whats up its been a while ")
+        )
 
       ],
-    );
+    ));
   }
 }
 
-
 class checkBoxM extends StatefulWidget {
   checkBoxM({Key? key, required this.listValue}) : super(key: key);
-   final String listValue;
+  final String listValue;
   @override
   _checkBoxMState createState() => _checkBoxMState();
 }
@@ -216,3 +227,27 @@ class _checkBoxMState extends State<checkBoxM> {
         });
   }
 }
+
+// Padding(
+//                         padding: EdgeInsets.all(9),
+//                         child: Column(
+//                           mainAxisAlignment: MainAxisAlignment.center,
+//                           children: [
+//                               Icon(Icons.circle),
+//                               Text("Good"),
+//                           ],
+//                           ),
+//                         ),
+
+
+                    // ToggleButtons(
+                    //   children: [
+                    //     Padding(
+                    //         padding: EdgeInsets.all(8), child: Text("Good")),
+                    //     Padding(
+                    //         padding: EdgeInsets.all(8), child: Text("Good")),
+                    //     Padding(
+                    //         padding: EdgeInsets.all(8), child: Text("Good")),
+                    //   ],
+                    //   isSelected: _ifSelected,
+                    // )
