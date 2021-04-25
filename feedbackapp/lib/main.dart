@@ -209,78 +209,88 @@ class _FeedbackState extends State<Feedback> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                ToggleButtons(children: [
-                  //using different buttons
-                  Container(
-                      //conatiner for 1 button
-                      padding: EdgeInsets.all(10),
-                      width: (MediaQuery.of(context).size.width - 30) / 3,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                           MaterialButton(  //used to make circul against icon in button
-                            onPressed: null,
-                            disabledColor: Colors.green,
-                            child: Icon(
-                              Icons.thumb_up_alt_outlined,
-                              color: Colors.white,
-                            ),
-                            padding: EdgeInsets.all(12),
-                            shape: CircleBorder(),
-                          ),
-                          Text(
-                            "Good",
-                            style: TextStyle(color: Colors.black),
-                            ),
-                        ],
-                      )),
-                  Container(
-                      //conatiner for 1 button
-                      width: (MediaQuery.of(context).size.width - 30) / 3,
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          MaterialButton(  //used to make circul against icon in button
-                            onPressed: null,
-                            disabledColor: Colors.amber,
-                            child: Icon(
-                              Icons.thumb_down_alt_outlined,
-                              color: Colors.black,
-                            ),
-                            padding: EdgeInsets.all(12),
-                            shape: CircleBorder(),
-                          ),
-                          Text(
-                            "Ok",
-                            style: TextStyle(color: Colors.black),
-                            ),
-                        ],
-                      )),
-                  Container(
-                      //conatiner for 1 button
-                      width: (MediaQuery.of(context).size.width - 30) / 3,
-                      padding: EdgeInsets.all(10),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                           MaterialButton(  //used to make circul against icon in button
-                            onPressed: null,
-                            disabledColor: Colors.red,
-                            child: Icon(
-                              Icons.thumb_down_alt_outlined,
-                              color: Colors.white,
-                            ),
-                            padding: EdgeInsets.all(12),
-                            shape: CircleBorder(),
-                          ),
-                          Text(
-                            "Bad",
-                            style: TextStyle(color: Colors.black),
-                            ),
-                        ],
-                      )),
-                ], isSelected: _ifSelected)
+                ToggleButtons(
+                    children: [
+                      //using different buttons
+                      Container(
+                          //conatiner for 1 button
+                          padding: EdgeInsets.all(10),
+                          width: (MediaQuery.of(context).size.width - 30) / 3,
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              MaterialButton(
+                                //used to make circul against icon in button
+                                onPressed: null,
+                                disabledColor: Colors.green,
+                                child: Icon(
+                                  Icons.thumb_up_alt_outlined,
+                                  color: Colors.white,
+                                ),
+                                padding: EdgeInsets.all(12),
+                                shape: CircleBorder(),
+                              ),
+                              Text(
+                                "Good",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          )),
+                      Container(
+                          //conatiner for 1 button
+                          width: (MediaQuery.of(context).size.width - 30) / 3,
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              MaterialButton(
+                                //used to make circul against icon in button
+                                onPressed: null,
+                                disabledColor: Colors.amber,
+                                child: Icon(
+                                  Icons.thumb_down_alt_outlined,
+                                  color: Colors.black,
+                                ),
+                                padding: EdgeInsets.all(12),
+                                shape: CircleBorder(),
+                              ),
+                              Text(
+                                "Ok",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          )),
+                      Container(
+                          //conatiner for 1 button
+                          width: (MediaQuery.of(context).size.width - 30) / 3,
+                          padding: EdgeInsets.all(10),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              MaterialButton(
+                                //used to make circul against icon in button
+                                onPressed: null,
+                                disabledColor: Colors.red,
+                                child: Icon(
+                                  Icons.thumb_down_alt_outlined,
+                                  color: Colors.white,
+                                ),
+                                padding: EdgeInsets.all(12),
+                                shape: CircleBorder(),
+                              ),
+                              Text(
+                                "Bad",
+                                style: TextStyle(color: Colors.black),
+                              ),
+                            ],
+                          )),
+                    ],
+                    isSelected: _ifSelected,
+                    onPressed: (int index) {
+                      setState(() {
+                        _ifSelected[index] = !_ifSelected[index];
+                      });
+                    })
               ],
             )),
 
