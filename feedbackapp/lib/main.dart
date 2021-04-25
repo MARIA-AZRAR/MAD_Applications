@@ -1,5 +1,4 @@
 import 'dart:html';
-
 import 'package:flutter/material.dart';
 
 void main() {
@@ -84,12 +83,13 @@ class Feedback extends StatefulWidget {
 
 class _FeedbackState extends State<Feedback> {
   String dropdownvalue = 'Newest First';
+
   List<bool> _ifSelected = [false, false, false];
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: Column(
+      child: Column(
       //Column for entire feedback form
       crossAxisAlignment: CrossAxisAlignment.start, //Align elements to left
       children: [
@@ -207,17 +207,14 @@ class _FeedbackState extends State<Feedback> {
         Container(
             padding: EdgeInsets.all(10),
             child: Column(
-             crossAxisAlignment: CrossAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 ToggleButtons(
-                  fillColor: Colors.blueGrey.shade300,
-                  splashColor: Colors.blue.shade100,
-                  borderColor: Colors.black,
-                  borderWidth: 1.7,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8)
-                  ),
-
+                    fillColor: Colors.blueGrey.shade300,
+                    splashColor: Colors.blue.shade100,
+                    borderColor: Colors.black,
+                    borderWidth: 1.7,
+                    borderRadius: BorderRadius.all(Radius.circular(8)),
                     children: [
                       //using different buttons
                       Container(
@@ -298,26 +295,98 @@ class _FeedbackState extends State<Feedback> {
                       setState(() {
                         _ifSelected[index] = !_ifSelected[index];
                       });
-                    })
+                    }),
+
+                Divider(),
+
+                checkBoxM(listValue: 'Consultant Notes Only'),
+
+                Divider(),
+
+                checkBoxM(listValue: 'Overdue Only'),
+
+                Divider(),
+
+                checkBoxM(listValue: 'Date Range'),
+
+                //Date picker
+                Container(
+                  padding: EdgeInsets.fromLTRB(20, 0, 20, 0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: Text("From", style: TextStyle(fontSize: 12)),
+                          ),
+                          datePick(startValue: "_")
+                        ],
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
+                            child: Text("To", style: TextStyle(fontSize: 12)),
+                          ),
+                        datePick(startValue: "Today",)
+                        ],
+                      )
+                    ],
+                  ),
+                )
               ],
-            )
-          ),
-
-          Divider(),
-
-          checkBoxM(listValue: 'Consultant Notes Only'),
-
-          Divider(),
-
-          checkBoxM(listValue: 'Overdue Only'),
-
-          Divider(),
-
-          checkBoxM(listValue: 'Date Range'),
-
-
+            )),
       ],
     ));
+  }
+}
+
+class datePick extends StatefulWidget {
+  datePick({Key? key, required this.startValue}) : super(key: key);
+  final String startValue;
+
+  @override
+  _datePickState createState() => _datePickState();
+}
+
+class _datePickState extends State<datePick> {
+
+  DateTime currentDate = DateTime.now();
+  bool flag = true;
+    //Date and Time Picker Created
+  Future<Null> _dateSelector(BuildContext context) async {
+
+    final DateTime? dateSelected = await showDatePicker(
+        context: context,
+        initialDate: currentDate,
+        firstDate: DateTime(2019, 1),
+        lastDate: DateTime(2111));
+    if (dateSelected != null)
+      setState(() {
+        currentDate = dateSelected;
+        flag = false;
+      });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return TextButton(
+      onPressed: () => _dateSelector(context),
+      child: Text(
+        flag ? widget.startValue : "${currentDate.day} - ${currentDate.month} - ${currentDate.year}",
+        style: TextStyle(
+          shadows: [Shadow(color: Colors.black, offset: Offset(0, -10))],
+          color: Colors.transparent,
+          decoration: TextDecoration.underline,
+          decorationColor: Colors.black,
+          decorationThickness: 1,
+        ),
+      ),
+    );
   }
 }
 
@@ -342,26 +411,3 @@ class _checkBoxMState extends State<checkBoxM> {
         });
   }
 }
-
-// Padding(
-//                         padding: EdgeInsets.all(9),
-//                         child: Column(
-//                           mainAxisAlignment: MainAxisAlignment.center,
-//                           children: [
-//                               Icon(Icons.circle),
-//                               Text("Good"),
-//                           ],
-//                           ),
-//                         ),
-
-// ToggleButtons(
-//   children: [
-//     Padding(
-//         padding: EdgeInsets.all(8), child: Text("Good")),
-//     Padding(
-//         padding: EdgeInsets.all(8), child: Text("Good")),
-//     Padding(
-//         padding: EdgeInsets.all(8), child: Text("Good")),
-//   ],
-//   isSelected: _ifSelected,
-// )
