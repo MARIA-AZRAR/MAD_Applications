@@ -93,12 +93,57 @@ Widget ImageCard(BuildContext context) {
 
 void ResultAlert(BuildContext context, bool cond) {
   var alertDialog = AlertDialog(
-    content: cond ? Image.network("https://media4.giphy.com/media/26tknCqiJrBQG6bxC/200.webp?cid=ecf05e470wdu1c2gqfibbv19v2qk6cfb3abrjajjysb6u69m&rid=200.webp&ct=g", fit: BoxFit.cover) : Image.network("https://media2.giphy.com/media/hPPx8yk3Bmqys/200.webp?cid=ecf05e475zekyn0y73oj4f39u50jbj36xa8d6lk1dd4a8a7d&rid=200.webp&ct=g", fit: BoxFit.cover),
+    content: cond
+        ? Image.network(
+            "https://media4.giphy.com/media/26tknCqiJrBQG6bxC/200.webp?cid=ecf05e470wdu1c2gqfibbv19v2qk6cfb3abrjajjysb6u69m&rid=200.webp&ct=g",
+            fit: BoxFit.cover)
+        : Image.network(
+            "https://media2.giphy.com/media/hPPx8yk3Bmqys/200.webp?cid=ecf05e475zekyn0y73oj4f39u50jbj36xa8d6lk1dd4a8a7d&rid=200.webp&ct=g",
+            fit: BoxFit.cover),
     elevation: 8,
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(23)
-      ),
-    );
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(23)),
+  );
 
   showDialog(context: context, builder: (BuildContext context) => alertDialog);
+}
+
+Widget overlapButtons() {
+  return Center(
+    //to center buttons
+    child: Container(
+      width:196, //Specifying the container width so that with position buttons can move and overlap in container
+      child: Stack(
+        //using stack instead of column to overlap buttons
+        children: [
+          RaisedButton(
+            padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(8.0),
+              side: BorderSide(color: Colors.black, width: 1.1),
+            ),
+            onPressed: () {},
+            color: Colors.white,
+            textColor: Colors.black,
+            child: Text("Money In", style: TextStyle(fontSize: 15)),
+          ),
+          Positioned(
+            //with the help of positioned button A can move freely
+            right: 0,
+            top: 0,
+            child: RaisedButton(
+              padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8.0),
+                side: BorderSide(color: Colors.black, width: 1.1),
+              ),
+              onPressed: () {},
+              color: Colors.white,
+              textColor: Colors.black,
+              child: Text("Money Out", style: TextStyle(fontSize: 15)),
+            ),
+          ),
+        ],
+      ),
+    ),
+  );
 }

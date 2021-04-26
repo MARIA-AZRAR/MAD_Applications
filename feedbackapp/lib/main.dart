@@ -1,4 +1,3 @@
-import 'dart:html';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -85,11 +84,12 @@ class _FeedbackState extends State<Feedback> {
   String dropdownvalue = 'Newest First';
 
   List<bool> _ifSelected = [false, false, false];
+  List<bool> _ifSelectedTransaction = [false, false];
 
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      child: Column(
+        child: Column(
       //Column for entire feedback form
       crossAxisAlignment: CrossAxisAlignment.start, //Align elements to left
       children: [
@@ -140,47 +140,63 @@ class _FeedbackState extends State<Feedback> {
                   "Transaction Types",
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 15),
                 ),
-                Center(
-                  //to center buttons
-                  child: Container(
-                    width:
-                        196, //Specifying the container width so that with position buttons can move and overlap in container
-                    child: Stack(
-                      //using stack instead of column to overlap buttons
-                      children: [
-                        RaisedButton(
-                          padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                            side: BorderSide(color: Colors.black, width: 1.1),
-                          ),
-                          onPressed: () {},
-                          color: Colors.white,
-                          textColor: Colors.black,
-                          child:
-                              Text("Money In", style: TextStyle(fontSize: 15)),
-                        ),
-                        Positioned(
-                          //with the help of positioned button A can move freely
-                          right: 0,
-                          top: 0,
-                          child: RaisedButton(
-                            padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(8.0),
-                              side: BorderSide(color: Colors.black, width: 1.1),
-                            ),
-                            onPressed: () {},
-                            color: Colors.white,
-                            textColor: Colors.black,
-                            child: Text("Money Out",
-                                style: TextStyle(fontSize: 15)),
-                          ),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+
+                //Container for buttons
+                Container(
+                    padding: EdgeInsets.all(10),
+                    child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          ToggleButtons(
+                              fillColor: Colors.blueGrey.shade300,
+                              splashColor: Colors.blue.shade100,
+                              borderColor: Colors.black,
+                              borderWidth: 1.7,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(8)),
+                              children: [
+                                //using different buttons
+                                Container(
+                                    //conatiner for 1 button
+                                    padding: EdgeInsets.all(25),
+                                    width: (MediaQuery.of(context).size.width -
+                                            50) /
+                                        2,
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Money In",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                      ],
+                                    )),
+                                Container(
+                                    //conatiner for 1 button
+                                    width: (MediaQuery.of(context).size.width -
+                                            50) /
+                                        2,
+                                    padding: EdgeInsets.all(25),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          "Money Out",
+                                          style: TextStyle(color: Colors.black),
+                                        ),
+                                      ],
+                                    )),
+                              ],
+                              isSelected: _ifSelectedTransaction,
+                              onPressed: (int index) {
+                                setState(() {
+                                  _ifSelectedTransaction[index] =
+                                      !_ifSelectedTransaction[index];
+                                });
+                              }),
+                        ])),
               ],
             )),
         checkBoxM(listValue: 'Shop'),
@@ -332,7 +348,9 @@ class _FeedbackState extends State<Feedback> {
                             padding: EdgeInsets.fromLTRB(0, 10, 0, 10),
                             child: Text("To", style: TextStyle(fontSize: 12)),
                           ),
-                        datePick(startValue: "Today",)
+                          datePick(
+                            startValue: "Today",
+                          )
                         ],
                       )
                     ],
@@ -354,12 +372,10 @@ class datePick extends StatefulWidget {
 }
 
 class _datePickState extends State<datePick> {
-
   DateTime currentDate = DateTime.now();
   bool flag = true;
-    //Date and Time Picker Created
+  //Date and Time Picker Created
   Future<Null> _dateSelector(BuildContext context) async {
-
     final DateTime? dateSelected = await showDatePicker(
         context: context,
         initialDate: currentDate,
@@ -377,7 +393,9 @@ class _datePickState extends State<datePick> {
     return TextButton(
       onPressed: () => _dateSelector(context),
       child: Text(
-        flag ? widget.startValue : "${currentDate.day} - ${currentDate.month} - ${currentDate.year}",
+        flag
+            ? widget.startValue
+            : "${currentDate.day} - ${currentDate.month} - ${currentDate.year}",
         style: TextStyle(
           shadows: [Shadow(color: Colors.black, offset: Offset(0, -10))],
           color: Colors.transparent,
@@ -411,3 +429,4 @@ class _checkBoxMState extends State<checkBoxM> {
         });
   }
 }
+
