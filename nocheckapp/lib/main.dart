@@ -27,6 +27,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   TextEditingController numberController = new TextEditingController();
+  
   String _result = "";
 
   void _primeOrComposite() {

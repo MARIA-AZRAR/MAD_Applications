@@ -23,7 +23,7 @@ class MyHomePage extends StatefulWidget {
 
   @override
   _MyHomePageState createState() => _MyHomePageState();
-}
+} 
 
 class _MyHomePageState extends State<MyHomePage> {
   @override
@@ -31,8 +31,8 @@ class _MyHomePageState extends State<MyHomePage> {
     return Scaffold(
       backgroundColor: Colors.white,
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Row(
-          //for the cross icon we need to use row
           children: [
             Container(
               padding: EdgeInsets.fromLTRB(0, 25, 10, 25),
@@ -159,12 +159,9 @@ class _FeedbackState extends State<Feedback> {
                                 Container(
                                     //conatiner for 1 button
                                     padding: EdgeInsets.all(25),
-                                    width: (MediaQuery.of(context).size.width -
-                                            50) /
-                                        2,
+                                    width: (MediaQuery.of(context).size.width - 50) / 2,
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.center,
                                       children: [
                                         Text(
                                           "Money In",
