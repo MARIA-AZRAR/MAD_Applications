@@ -129,7 +129,7 @@ Future consumerRegisteration() async {
           elevation: 8,
           contentPadding: EdgeInsets.fromLTRB(20, 40, 20, 50),
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(23)),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
           actions: [
             FlatButton(
               padding: EdgeInsets.fromLTRB(0, 0, 10, 16),

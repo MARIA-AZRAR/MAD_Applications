@@ -67,11 +67,12 @@ class _ShowRecordsState extends State<ShowRecords> {
 
 
 Future<List<Consumer>> fetchConsumersList() async {
-  final response =
-      await http.get(Uri.parse('https://pcc.edu.pk/ws/list/rs_consumers.php'));
+  final response = await http.get(Uri.parse('https://pcc.edu.pk/ws/list/rs_consumers.php'));
+
   if (response.statusCode == 200) {
     final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
     return parsed.map<Consumer>((json) => Consumer.fromJson(json)).toList();
+    
   } else {
     throw Exception("Unable to show the data");
   }

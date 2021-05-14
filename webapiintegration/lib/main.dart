@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.teal,
       ),
-      home: MyHomePage(title: 'Web Api Integration'),
+      home: MyHomePage(title: 'Consumer Data Application'),
     );
   }
 }
