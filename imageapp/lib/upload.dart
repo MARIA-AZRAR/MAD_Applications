@@ -1,101 +1,66 @@
-import 'dart:io';
+// import 'dart:io';
 
-import 'package:flutter/material.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter/widgets.dart';
+// import 'package:http/http.dart' as http;
 
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/widgets.dart';
 
-/// Widget to upload image to cloud
-class ImageUpload extends StatefulWidget {
-  ImageUpload({Key? key, required this.file}) : super(key: key);
+// /// Widget to upload image to cloud
+// class ImageUpload extends StatefulWidget {
+//   ImageUpload({Key? key, required this.base64Image}) : super(key: key);
 
-  final File? file;
+//   final String base64Image;
+//   //final File? file;
 
-  createState() => _ImageUploadState();
-}
+//   createState() => _ImageUploadState();
+// }
 
-class _ImageUploadState extends State<ImageUpload> {
-  final FirebaseStorage _storage =  FirebaseStorage(storageBucket: 'gs://flutterimageapp-4cbf5.appspot.com');
+// class _ImageUploadState extends State<ImageUpload> {
 
- //variable to get status of upload
-  StorageUploadTask? _imageUploadTask;
+//  String status = '';
+//  String errorMsg = 'Cannot Upload the image' ;
 
-  /// Starts an upload task
-  void _startUpload() {
+//  var url = 'https://pcc.edu.pk/ws/file_upload.php';
 
-    /// Unique file name for the file
-    String filePath = 'images/${DateTime.now()}.png';
+//  String filename = 'images/${DateTime.now()}.png';
+// String base64Image = base64Encode(imageBytes);
 
-    setState(() {
-      _imageUploadTask = _storage.ref().child(filePath).putFile(widget.file);
-    });
-  }
-  void _clear() {
-    setState(() => _imageUploadTask = null);
-  }
+//  setStatus(String message) {
+//     setState(() {
+//       status = message;
+//     });
+//   }
 
-  @override
-  Widget build(BuildContext context) {
-    if (_imageUploadTask != null) {
+//   _uploadImage() {
+//     setStatus('Uploading Image...');
+//     if (widget.file == null) {
+//       setStatus(errorMsg);
+//       return;
+//     }
+//     upload();
+//   }
 
-      /// Manage the task state and event subscription with a StreamBuilder
-      return StreamBuilder<StorageTaskEvent>(
-          stream: _imageUploadTask!.events,
-          builder: (_, snapshot) {
-            var event = snapshot.data?.snapshot;
+//   upload() {
+//     http.post(Uri.parse(url), body: {
+//       "image": widget.base64Image,
+//       "name": filename,
+//     }).then((result) {
+//       setStatus(result.statusCode == 200 ? result.body : errorMsg);
+//     }).catchError((error) {
+//       setStatus(error);
+//     });
+//   }
 
-            double progressPercent = event != null
-                ? event.bytesTransferred / event.totalByteCount
-                : 0;
+//   @override
+//   Widget build(BuildContext context) {
+//       // Allows user to decide when to start the upload
+//       return ElevatedButton.icon(
+//           label: Text('Upload'),
+//           icon: Icon(Icons.cloud_upload,
+//           color: Colors.white,
+//           ),
+//           onPressed:_uploadImage,
+//           );
 
-            return Column(
-
-                children: [
-                  if (_imageUploadTask!.isComplete)
-                    Padding(
-                      padding: EdgeInsets.all(16),
-                      child:  Text('Compeleted 🎉🎉'),
-                    ),
-
-                  if (_imageUploadTask!.isPaused)
-                    FlatButton(
-                      child: Icon(Icons.play_arrow),
-                      onPressed: _imageUploadTask!.resume,
-                    ),
-
-                  if (_imageUploadTask!.isInProgress)
-                    FlatButton(
-                      child: Icon(Icons.pause),
-                      onPressed: _imageUploadTask!.pause,
-                    ),
-                  // Progress bar
-                  LinearProgressIndicator(value: progressPercent),
-                  Text(
-                    '${(progressPercent * 100).toStringAsFixed(2)} % '
-                  ),
-
-                  if (_imageUploadTask!.isSuccessful)
-                    FlatButton(
-                      child: Icon(Icons.clear),
-                      onPressed: _clear,
-                    ),
-
-                ],
-              );
-          });
-
-          
-    } else {
-
-      // Allows user to decide when to start the upload
-      return ElevatedButton.icon(
-          label: Text('Upload to Firebase'),
-          icon: Icon(Icons.cloud_upload,
-          color: Colors.white,
-          ),
-          onPressed:_startUpload,
-          );
-
-    }
-  }
-}
+//     }
+//   }

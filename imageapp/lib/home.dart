@@ -1,6 +1,8 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'dart:io';
-
+import 'package:http/http.dart' as http;
 import 'package:image_picker/image_picker.dart';
 import 'package:flutter/widgets.dart';
 import 'package:image_cropper/image_cropper.dart';
@@ -13,18 +15,19 @@ class ImagePickerWidget extends StatefulWidget {
 
 class _ImagePickerWidgetState extends State<ImagePickerWidget> {
   File? _image;
+  String status = 'No Image Selected';
+  String errorMsg = 'Cannot Upload the image' ;
+  var url = 'https://pcc.edu.pk/ws/file_upload.php';
 
-  /// Cropper plugin
-  Future<void> _cropImage() async {
+  String filename = ' ';  
+  String base64Image = '';
+
+   /// Cropper plugin
+    Future<void> _cropImage() async {
     File? croppedImage = await ImageCropper.cropImage(
       sourcePath: _image!.path,
-      // ratioX: 1.0,
-      // ratioY: 1.0,
       maxWidth: 512,
       maxHeight: 512,
-      // toolbarColor: Colors.purple,
-      // toolbarWidgetColor: Colors.white,
-      // toolbarTitle: 'Crop It'
     );
 
     setState(() {
@@ -34,8 +37,9 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
 
   /// Select an image from gallery or camera
   Future<void> _pickImage(ImageSource source) async {
-    File selected =
-        await ImagePicker.pickImage(source: source, imageQuality: 50);
+    File selected =  await ImagePicker.pickImage(source: source, imageQuality: 50);
+
+    setStatus("Image Selected");
 
     setState(() {
       _image = selected;
@@ -44,8 +48,12 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
 
   /// Remove image
   void _clear() {
+    setStatus('No Image Selected');
     setState(() => _image = null);
   }
+
+
+
 
   void _showPicker(context) {
     showModalBottomSheet(
@@ -53,24 +61,24 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
         builder: (BuildContext bc) {
           return SafeArea(
             child: Container(
-              child: new Wrap(
+              child: Wrap(
                 children: <Widget>[
-                  new ListTile(
-                      leading: new Icon(
+                   ListTile(
+                      leading:  Icon(
                         Icons.photo_library,
                         color: Colors.red,
                       ),
-                      title: new Text('Gallery'),
+                      title:  Text('Gallery'),
                       onTap: () {
                         _pickImage(ImageSource.gallery);
                         Navigator.of(context).pop();
                       }),
-                  new ListTile(
-                    leading: new Icon(
+                     ListTile(
+                    leading:  Icon(
                       Icons.photo_camera,
                       color: Colors.blue,
                     ),
-                    title: new Text('Camera'),
+                    title: Text('Camera'),
                     onTap: () {
                       _pickImage(ImageSource.camera);
                       Navigator.of(context).pop();
@@ -82,6 +90,41 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
           );
         });
   }
+
+
+//Upload Image
+
+ setStatus(String message) {
+    setState(() {
+      status = message;
+    });
+  }
+
+  _uploadImage() {
+    setStatus('Uploading Image...');
+    if (_image == null) {
+      setStatus('Cannot Upload No Image Selected');
+      print("No Upload");
+
+    }else{
+      base64Image = base64Encode(_image!.readAsBytesSync());
+      filename = 'images/${DateTime.now()}.png';
+      upload(); 
+    }
+  }
+
+  upload() {
+    http.post(Uri.parse(url), body: {
+      "image": base64Image,
+      "name": filename,
+    }).then((result) {
+      setStatus(result.statusCode == 200 ? jsonDecode(result.body)['message'] : errorMsg);
+    }).catchError((error) {
+      setStatus(error);
+    });
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -143,10 +186,26 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
             ),
           ],
         ),
+        SizedBox(
+          height: 20,
+        ),
+        Center(
+         child: Padding(
+          padding: EdgeInsets.all(20),
+          child: Text(status)
+        ),
+        ),
         Center(
             child: Padding(
                padding: EdgeInsets.all(24),
-               child: ImageUpload(file: _image)
+               child: ElevatedButton.icon(
+                label: Text('Upload'),
+                icon: Icon(Icons.cloud_upload,
+                color: Colors.white,
+                ),
+                onPressed:_uploadImage,
+                ),
+
         ))
       ],
     );
