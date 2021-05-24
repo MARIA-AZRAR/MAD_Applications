@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'BetterForm.dart';
 import 'SimpleForm.dart';
-import 'register.dart';
+import 'home.dart';
 void main() {
   runApp(MyApp());
 }
@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Form App',
       theme: ThemeData(
-        primarySwatch: Colors.blue,
+        primarySwatch: Colors.red,
       ),
       home: MyHomePage(title: 'Form App'),
     );
@@ -38,7 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: SingleChildScrollView(
-        child: register()
+        child: home()
       )
     );
   }
