@@ -12,7 +12,7 @@ class _dropDownBState extends State<dropDownB> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.topLeft,
+      alignment: Alignment.center,
       child: Padding(
         padding: EdgeInsets.all(25),
         child: Column(
@@ -25,19 +25,16 @@ class _dropDownBState extends State<dropDownB> {
               ),
             ),
             SizedBox(
-              height: 10,
+              height: 80
             ),
-            Text(
-              "       Dropdown Button to display any Dropdown List item as we can change its style according to it. Such as its background color, border secular etc. As this Dropdown list because it is a clickable widget. Which shows the list item we have selected. The Dropdown Button has DropDownMenuItem. We initialize whatever is to be shown in the list. and the Dropdown button has a function named onChnaged. When a user clicks on an item from the dropdown. So it triggers and executes the triggered function.",
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                fontSize: 19,
-              ),
+
+            Container(
+              padding: EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(9),
+              color: Colors.green[100],
             ),
-            SizedBox(
-              height: 50
-            ),
-            DropdownButton<String>(
+            child: DropdownButton<String>(
             value: _dropDownValue,
             iconEnabledColor: Colors.lightGreen,
             dropdownColor: Colors.lightGreen,
@@ -67,7 +64,7 @@ class _dropDownBState extends State<dropDownB> {
                   ),
             ),
           ),
-
+            ),
           ],
         ),
       ),

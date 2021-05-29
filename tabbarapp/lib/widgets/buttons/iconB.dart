@@ -6,7 +6,32 @@ class iconB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Icon"),
+      child: Padding(
+        padding: EdgeInsets.all(25),
+        child: Column(
+          children: [
+            Text(
+              "IconButton",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            SizedBox(height: 80),
+            Ink(
+              decoration: const ShapeDecoration(
+                color: Colors.lightGreen,
+                shape: CircleBorder(),
+              ),
+              child: IconButton(
+                icon: const Icon(Icons.favorite),
+                color: Colors.black,
+                onPressed: () {},
+              ),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

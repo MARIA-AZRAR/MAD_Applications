@@ -6,7 +6,6 @@ class elevatedB extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      alignment: Alignment.topLeft,
       child: Padding(
         padding: EdgeInsets.all(25),
         child: Column(
@@ -18,20 +17,18 @@ class elevatedB extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            SizedBox(
-              height: 10,
-            ),
-            Text(
-              "",
-              textAlign: TextAlign.justify,
-              style: TextStyle(
-                fontSize: 19,
+            SizedBox(height: 80),
+            ElevatedButton(
+              child: Padding(
+                padding: EdgeInsets.all(16),
+                child: Text(
+                  'Click Me',
+                ),
               ),
+              onPressed: () {
+                print("I am Pressed");
+              },
             ),
-            SizedBox(
-              height: 10
-            ),
-            
           ],
         ),
       ),
