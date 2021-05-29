@@ -14,9 +14,8 @@ class _registerState extends State<register> {
   String? mobileNo;
   String? password;
   bool checked = false;
-  RegExp phone_validator = new RegExp(r'(^(?:[+0]9)?[0-9]{11}$)');
-  RegExp password_validator =
-      new RegExp(r'(^(?:[0-9]+[a-zA-Z]|[a-zA-Z]+[0-9])[a-zA-Z0-9]*$)');
+  RegExp phone_validator = RegExp(r'(^(?:[+0]9)?[0-9]{11}$)');
+  RegExp password_validator = RegExp(r'(^(?:[0-9]+[a-zA-Z]|[a-zA-Z]+[0-9])[a-zA-Z0-9]*$)');
 
   final formKey = GlobalKey<FormState>();
 
@@ -156,7 +155,7 @@ class _registerState extends State<register> {
                 ),
                 ListTile(
                     title: ElevatedButton(
-                  style: ButtonStyle(
+                    style: ButtonStyle(
                       backgroundColor: MaterialStateProperty.all(Colors.red),
                       shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                           RoundedRectangleBorder(
