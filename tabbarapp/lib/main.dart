@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import './widgets/buttons/dropDown.dart';
-import './widgets/buttons/elevated.dart';
-import './widgets/buttons/iconB.dart';
-import './widgets/buttons/outlined.dart';
-import 'widgets/buttons/textB.dart';
-
+import './widgets/buttonsTabbar.dart';
+import './widgets/InputTabbar.dart';
 void main() {
   runApp(MyApp());
 }
@@ -34,43 +30,52 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 5,
-      child: Scaffold(
-        backgroundColor: Colors.white,
-        appBar: AppBar(
-          title: Text(widget.title),
-          bottom: TabBar(
-            tabs: [
-              Tab(
-                icon: Icon(Icons.arrow_drop_down_circle,),
-                text: "DropDownButton",
-              ),
-              Tab(
-                icon: Icon(Icons.smart_display),
-                text: "ElevatedButton",
-              ),
-              Tab(
-                icon: Icon(Icons.favorite),
-                text: "IconButton",
-              ),
-               Tab(
-                icon: Icon(Icons.smart_display_outlined),
-                text: "OutlinedButton",
-              ),
-               Tab(
-                icon: Icon(Icons.text_fields),
-                text: "TextButton",
-              ),
-            ],
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
+      drawer: Sidebar(),
+      body: Center(),
+    );
+  }
+}
+
+
+
+class Sidebar extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          UserAccountsDrawerHeader(
+            accountName: Text("Maria Azrar"),
+            accountEmail: Text("Mariaazrar2000@gmail.com"),
+            currentAccountPicture: ClipOval(
+              child: Image.network(
+                  "https://avatars.githubusercontent.com/u/55192319?v=4"),
+            ),
           ),
-        ),
-        body: TabBarView(
-          children:[
-            dropDownB(), elevatedB(), iconB(), outlinedB(), textB(),
-          ],
-        ),
+          Divider(),
+          ListTile(
+            leading: Icon(Icons.smart_button_sharp),
+            title: Text("Buttons Info"),
+            onTap: () {
+              Navigator.push( context, 
+              MaterialPageRoute(builder: (context) => buttonTabbar())
+              );
+            }
+          ),
+          ListTile(
+            leading: Icon(Icons.input),
+            title: Text("Input & Selection"),
+            onTap: () {
+              Navigator.push( context, 
+              MaterialPageRoute(builder: (context) => inputTabbar())
+              );
+            },
+          )
+        ],
       ),
     );
   }
