@@ -5,7 +5,7 @@ class sliderI extends StatefulWidget {
 
   @override
   _sliderIState createState() => _sliderIState();
-}
+} 
 
 class _sliderIState extends State<sliderI> {
   double _currentValue = 15;

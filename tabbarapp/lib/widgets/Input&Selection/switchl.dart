@@ -7,7 +7,7 @@ class switchI extends StatefulWidget {
   _switchIState createState() => _switchIState();
 }
 
-class _switchIState extends State<switchI> {
+class _switchIState extends State<switchI> { 
   bool _isSwitched = false;
   @override
   Widget build(BuildContext context) {

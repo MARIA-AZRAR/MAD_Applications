@@ -21,7 +21,7 @@ class outlinedB extends StatelessWidget {
             OutlinedButton(
               style: OutlinedButton.styleFrom(
                 side: BorderSide(color: Colors.lightGreen, width: 2),
-              ),
+              ), 
               child: Padding(
                 padding: EdgeInsets.all(16),
                 child: Text(

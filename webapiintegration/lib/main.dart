@@ -37,8 +37,10 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       drawer: Sidebar(),
-      body: Container(
+      body: SingleChildScrollView( 
+        child: Container(
         child: HomePage() 
+      )
       )
     );
   }

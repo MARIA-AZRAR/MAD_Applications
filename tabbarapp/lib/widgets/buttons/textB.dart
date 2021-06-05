@@ -7,7 +7,7 @@ class textB extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       child: Padding(
-        padding: EdgeInsets.all(25),
+        padding: EdgeInsets.all(25), 
         child: Column(children: [
           Text(
             "TextButton",

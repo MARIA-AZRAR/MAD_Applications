@@ -25,7 +25,8 @@ class _registerState extends State<register> {
       backgroundColor: Colors.white,
       body: Form(
           key: formKey,
-          child: Container(
+          child: SingleChildScrollView(
+           child: Container(
             padding: EdgeInsets.all(20),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -189,7 +190,9 @@ class _registerState extends State<register> {
                           style: TextStyle(color: Colors.blueGrey[200])),
                       TextSpan(
                           text: "Terms & Conditions",
-                          style: TextStyle(fontWeight: FontWeight.bold)),
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontWeight: FontWeight.bold)),
                     ]),
                   ),
                   value: checked,
@@ -204,6 +207,7 @@ class _registerState extends State<register> {
               ],
             ),
           )),
+    )
     );
   }
 }

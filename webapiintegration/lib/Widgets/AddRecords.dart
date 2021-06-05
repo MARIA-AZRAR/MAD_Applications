@@ -31,7 +31,9 @@ class _AddRecordsState extends State<AddRecords> {
           title: Text("Add Consumer Record"),
         ),
         drawer: Sidebar(),
-        body: Container(
+        body: SingleChildScrollView(
+          scrollDirection: Axis.vertical,
+          child: Container(
             padding: EdgeInsets.fromLTRB(100, 50, 100, 14),
             child: new Column(children: [
               new ListTile(
@@ -94,7 +96,8 @@ class _AddRecordsState extends State<AddRecords> {
                   elevation: 6,
                 ),
               ),
-            ])));
+            ]))
+    ));
   }
 }
 

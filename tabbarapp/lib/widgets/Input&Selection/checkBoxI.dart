@@ -10,7 +10,7 @@ class checkBoxI extends StatefulWidget {
 class _checkBoxIState extends State<checkBoxI> {
   bool _checked = false;
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context) { 
     return Container(
       child: Padding(
         padding: EdgeInsets.all(25),

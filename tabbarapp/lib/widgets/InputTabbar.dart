@@ -40,7 +40,7 @@ class inputTabbar extends StatelessWidget {
                Tab(
                 icon: Icon(Icons.switch_left),
                 text: "Switch",
-              ),
+              ), 
               Tab(
                 icon: Icon(Icons.text_fields),
                 text: "TextField",

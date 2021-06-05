@@ -28,7 +28,9 @@ class _ShowRecordsState extends State<ShowRecords> {
           title: Text("Consumer Records"),
         ),
         drawer: Sidebar(),
-        body: Container(
+        body: SingleChildScrollView(
+          scrollDirection: Axis.horizontal,
+          child: Container(
             padding: EdgeInsets.all(16),
             child: FutureBuilder<List<Consumer>>(
                 future: consumersList,
@@ -61,7 +63,8 @@ class _ShowRecordsState extends State<ShowRecords> {
                   return Center(
                     child: CircularProgressIndicator(),
                   );
-                })));
+                }))
+    ));
   }
 }
 
