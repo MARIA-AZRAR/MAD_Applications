@@ -31,7 +31,7 @@ class assgnment5 extends StatelessWidget {
                appImage('assets/images/w3.jpg' , _height), 
                appImage('assets/images/w4.jpg' , _height),
                appImage('assets/images/w5.jpg' , _height),
-               appVideo(url: 'assets/videos/tabbarvid.mp4'),
+               appVideo(url: 'assets/videos/webapivid.mp4'),
             ],
 
             //Slider Container properties

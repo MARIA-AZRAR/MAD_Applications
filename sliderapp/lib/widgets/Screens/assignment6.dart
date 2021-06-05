@@ -4,6 +4,7 @@ import '../Title.dart';
 import '../../sidebar.dart';
 import '../Description.dart';
 import '../AppImages.dart';
+import '../AppVideo.dart';
 
 class assgnment6 extends StatelessWidget {
   const assgnment6({Key? key}) : super(key: key);
@@ -31,7 +32,8 @@ class assgnment6 extends StatelessWidget {
                appImage('assets/images/i5.jpg' , _height),
                appImage('assets/images/i6.jpg' , _height), 
                appImage('assets/images/i7.jpg' , _height),
-               appImage('assets/images/i8.jpg' , _height),               
+               appImage('assets/images/i8.jpg' , _height),   
+               appVideo(url: 'assets/videos/imgappvid.mp4'),            
             ],
 
             //Slider Container properties
@@ -42,7 +44,7 @@ class assgnment6 extends StatelessWidget {
             aspectRatio: 16 / 9,
             autoPlayCurve: Curves.fastOutSlowIn,
             enableInfiniteScroll: true,
-            autoPlayAnimationDuration: Duration(milliseconds: 800),
+            autoPlayAnimationDuration: Duration(milliseconds: 96000),
             viewportFraction: 0.8,
             )
           ),

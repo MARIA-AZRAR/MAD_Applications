@@ -44,15 +44,6 @@ class assgnment7 extends StatelessWidget {
                 autoPlayAnimationDuration: Duration(milliseconds: 96000),
                 viewportFraction: 0.8,
               )),
-          Container(
-            child: Center(
-              child: Image.asset(
-                'assets/images/r2.jpg',
-                fit: BoxFit.cover,
-                height: _height,
-              ),
-            ),
-          ),
         ],
       ),
     );
