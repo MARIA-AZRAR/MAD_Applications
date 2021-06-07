@@ -27,12 +27,12 @@ class assgnment5 extends StatelessWidget {
             items: [
                title("Web API Integration"),
                description("An Application that takes input from user and add record to a web API created in PHP using http post method. The application also shows all the added records using http get method in tabular format using DataTable"),
-               appImage('assets/images/w1.jpg' , _height),
-               appImage('assets/images/w2.jpg' , _height),              
-               appImage('assets/images/w3.jpg' , _height), 
-               appImage('assets/images/w4.jpg' , _height),
-               appImage('assets/images/w5.jpg' , _height),
-               appVideo(url: 'assets/videos/webapivid.mp4'),
+               appImage('assets/images/w1.jpg' ),
+               appImage('assets/images/w2.jpg' ),              
+               appImage('assets/images/w3.jpg' ), 
+               appImage('assets/images/w4.jpg' ),
+               appImage('assets/images/w5.jpg' ),
+               
             ],
 
             //Slider Container properties
@@ -52,7 +52,7 @@ class assgnment5 extends StatelessWidget {
           vidHeading(),
           Container(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child:   appVideo(url: 'assets/videos/drawervid.mp4'),
+            child: appVideo(url: 'assets/videos/webapivid.mp4'),
           ),
           SizedBox(height: 25,),
         ],

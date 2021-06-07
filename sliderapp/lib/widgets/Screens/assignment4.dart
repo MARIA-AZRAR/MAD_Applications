@@ -27,11 +27,11 @@ class assgnment4 extends StatelessWidget {
             items: [
                title("DropDown Button & Toggle Button"),
                description("A Mobile Application that uses dropdown button, toggle button and checkbox to complete a form that takes input from user."),
-               appImage('assets/images/f1.jpg' , _height),
-               appImage('assets/images/f2.jpg' , _height),              
-               appImage('assets/images/f3.jpg' , _height), 
-               appImage('assets/images/f4.jpg' , _height),
-               appVideo(url: 'assets/videos/feedbackvid.mp4'),
+               appImage('assets/images/f1.jpg' ),
+               appImage('assets/images/f2.jpg' ),              
+               appImage('assets/images/f3.jpg' ), 
+               appImage('assets/images/f4.jpg' ),
+              
             ],
 
             //Slider Container properties
@@ -51,7 +51,7 @@ class assgnment4 extends StatelessWidget {
           vidHeading(),
           Container(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child:   appVideo(url: 'assets/videos/drawervid.mp4'),
+            child:  appVideo(url: 'assets/videos/feedbackvid.mp4'),
           ),
           SizedBox(height: 25,),
         ],

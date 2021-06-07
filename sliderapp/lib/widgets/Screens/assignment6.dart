@@ -54,7 +54,7 @@ class assgnment6 extends StatelessWidget {
           vidHeading(),
           Container(
             padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
-            child:   appVideo(url: 'assets/videos/drawervid.mp4'),
+            child: appVideo(url: 'assets/videos/imgappvid.mp4'),       
           ),
           SizedBox(height: 25,),
         ],
