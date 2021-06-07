@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'sidebar.dart';
-import 'circleIcon.dart';
-
+import './widgets/Description.dart';
 void main() {
   runApp(MyApp());
 }
@@ -37,7 +36,9 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Color(0xFF40c8c4),
       ),
       drawer: Sidebar(),
-      body: circleICon('1')
+      body: Center(
+        child: description("Detailed Description of All Previous Assignments.")
+      )
     );
   }
 }
