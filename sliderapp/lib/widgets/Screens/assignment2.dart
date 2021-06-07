@@ -5,6 +5,7 @@ import '../../sidebar.dart';
 import '../Description.dart';
 import '../AppImages.dart';
 import '../AppVideo.dart';
+import '../vidHeading.dart';
 
 class assgnment2 extends StatelessWidget {
   const assgnment2({Key? key}) : super(key: key);
@@ -26,10 +27,9 @@ class assgnment2 extends StatelessWidget {
             items: [
                title("AlertDialog & Card Application"),
                description("A Mobile Application that that uses card to display image and asks question from user. If user clicks right button alertBox comes with correct and if wrong alertBox comes with wrong"),
-               appImage('assets/images/c1.jpg' , _height),
-               appImage('assets/images/c2.jpg' , _height),              
-               appImage('assets/images/c3.jpg' , _height),
-               appVideo(url: 'assets/videos/cardappvid.mp4'), 
+               appImage('assets/images/c1.jpg' ),
+               appImage('assets/images/c2.jpg' ),              
+               appImage('assets/images/c3.jpg' ),
             ],
 
             //Slider Container properties
@@ -43,7 +43,14 @@ class assgnment2 extends StatelessWidget {
             autoPlayAnimationDuration: Duration(milliseconds: 96000),
             viewportFraction: 0.8,
             )
+          ),          
+          SizedBox(height: 25,),
+          vidHeading(),
+          Container(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: appVideo(url: 'assets/videos/cardappvid.mp4'), 
           ),
+          SizedBox(height: 25,),
         ],
       ),
     );

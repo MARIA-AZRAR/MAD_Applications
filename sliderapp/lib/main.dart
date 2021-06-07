@@ -12,9 +12,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Slider APP',
-      // theme: ThemeData(
-      //   primarySwatch:,
-      // ),
       home: MyHomePage(title: 'Assignments Stack'),
     );
   }

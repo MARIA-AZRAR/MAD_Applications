@@ -5,6 +5,7 @@ import '../../sidebar.dart';
 import '../Description.dart';
 import '../AppImages.dart';
 import '../AppVideo.dart';
+import '../vidHeading.dart';
 
 class assgnment7 extends StatelessWidget {
   const assgnment7({Key? key}) : super(key: key);
@@ -25,11 +26,11 @@ class assgnment7 extends StatelessWidget {
                 title("Flutter Forms"),
                 description(
                     "A Mobile Application that takes data from user using TextFormField. All the data is validated and if according to format submitted successfully"),
-                appImage('assets/images/r1.jpg', _height),
-                appImage('assets/images/r3.jpg', _height),
-                appImage('assets/images/r4.jpg', _height),
-                appImage('assets/images/r5.jpg', _height),
-                appVideo(url: 'assets/videos/formappvid.mp4'),
+                appImage('assets/images/r1.jpg'),
+                appImage('assets/images/r3.jpg'),
+                appImage('assets/images/r4.jpg'),
+                appImage('assets/images/r5.jpg'),
+                
 
               ],
 
@@ -43,7 +44,16 @@ class assgnment7 extends StatelessWidget {
                 enableInfiniteScroll: true,
                 autoPlayAnimationDuration: Duration(milliseconds: 96000),
                 viewportFraction: 0.8,
-              )),
+              )
+              ),   
+              
+          SizedBox(height: 25,),
+          vidHeading(),
+          Container(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: appVideo(url: 'assets/videos/formappvid.mp4'),
+          ),
+          SizedBox(height: 25,),
         ],
       ),
     );

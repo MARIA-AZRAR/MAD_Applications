@@ -107,43 +107,43 @@ void ResultAlert(BuildContext context, bool cond) {
   showDialog(context: context, builder: (BuildContext context) => alertDialog);
 }
 
-Widget overlapButtons() {
-  return Center(
-    //to center buttons
-    child: Container(
-      width:196, //Specifying the container width so that with position buttons can move and overlap in container
-      child: Stack(
-        //using stack instead of column to overlap buttons
-        children: [
-          RaisedButton(
-            padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(8.0),
-              side: BorderSide(color: Colors.black, width: 1.1),
-            ),
-            onPressed: () {},
-            color: Colors.white,
-            textColor: Colors.black,
-            child: Text("Money In", style: TextStyle(fontSize: 15)),
-          ),
-          Positioned(
-            //with the help of positioned button A can move freely
-            right: 0,
-            top: 0,
-            child: RaisedButton(
-              padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(8.0),
-                side: BorderSide(color: Colors.black, width: 1.1),
-              ),
-              onPressed: () {},
-              color: Colors.white,
-              textColor: Colors.black,
-              child: Text("Money Out", style: TextStyle(fontSize: 15)),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
+// Widget overlapButtons() {
+//   return Center(
+//     //to center buttons
+//     child: Container(
+//       width:196, //Specifying the container width so that with position buttons can move and overlap in container
+//       child: Stack(
+//         //using stack instead of column to overlap buttons
+//         children: [
+//           RaisedButton(
+//             padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+//             shape: RoundedRectangleBorder(
+//               borderRadius: BorderRadius.circular(8.0),
+//               side: BorderSide(color: Colors.black, width: 1.1),
+//             ),
+//             onPressed: () {},
+//             color: Colors.white,
+//             textColor: Colors.black,
+//             child: Text("Money In", style: TextStyle(fontSize: 15)),
+//           ),
+//           Positioned(
+//             //with the help of positioned button A can move freely
+//             right: 0,
+//             top: 0,
+//             child: RaisedButton(
+//               padding: EdgeInsets.fromLTRB(25, 25, 25, 25),
+//               shape: RoundedRectangleBorder(
+//                 borderRadius: BorderRadius.circular(8.0),
+//                 side: BorderSide(color: Colors.black, width: 1.1),
+//               ),
+//               onPressed: () {},
+//               color: Colors.white,
+//               textColor: Colors.black,
+//               child: Text("Money Out", style: TextStyle(fontSize: 15)),
+//             ),
+//           ),
+//         ],
+//       ),
+//     ),
+//   );
+// }

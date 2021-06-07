@@ -1,13 +1,12 @@
 import 'package:flutter/material.dart';
 
-Widget appImage(String url, double _height) {
+Widget appImage(String url) {
   return Container(
     child: Center(
       child: Image.asset(
         url,
-        fit: BoxFit.cover,
-        height: _height,
-      ),
+        fit: BoxFit.fitHeight,
+      ), 
     ),
   );
 }

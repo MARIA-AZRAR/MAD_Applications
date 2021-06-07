@@ -5,6 +5,7 @@ import '../../sidebar.dart';
 import '../Description.dart';
 import '../AppImages.dart';
 import '../AppVideo.dart';
+import '../vidHeading.dart';
 
 class assgnment8 extends StatelessWidget {
   const assgnment8({Key? key}) : super(key: key);
@@ -26,20 +27,20 @@ class assgnment8 extends StatelessWidget {
             items: [
                title("Tabbar App"),
                description("A Mobile Application that have two Screens. One is a screen with Five tabs, to demonstrate five Buttons Widgets, one button per tab. Other is a screen with Six tabs, each to demonstrate Input & Selection Widgets, one widget per tab. It uses TabBar, TabBarView and TabController"),
-               appImage('assets/images/t1.jpg' , _height),
-               appImage('assets/images/t2.jpg' , _height),              
-               appImage('assets/images/t3.jpg' , _height), 
-               appImage('assets/images/t4.jpg' , _height),
-               appImage('assets/images/t5.jpg' , _height),
-               appImage('assets/images/t6.jpg' , _height),
-               appImage('assets/images/t7.jpg' , _height),              
-               appImage('assets/images/t8.jpg' , _height), 
-               appImage('assets/images/t9.jpg' , _height),
-               appImage('assets/images/t10.jpg' , _height),               
-               appImage('assets/images/t11.jpg' , _height),               
-               appImage('assets/images/t12.jpg' , _height),               
-               appImage('assets/images/t13.jpg' , _height),               
-               appVideo(url: 'assets/videos/tabbarvid.mp4'),
+               appImage('assets/images/t1.jpg' ),
+               appImage('assets/images/t2.jpg' ),              
+               appImage('assets/images/t3.jpg' ), 
+               appImage('assets/images/t4.jpg' ),
+               appImage('assets/images/t5.jpg' ),
+               appImage('assets/images/t6.jpg' ),
+               appImage('assets/images/t7.jpg' ),              
+               appImage('assets/images/t8.jpg' ), 
+               appImage('assets/images/t9.jpg' ),
+               appImage('assets/images/t10.jpg' ),               
+               appImage('assets/images/t11.jpg' ),               
+               appImage('assets/images/t12.jpg' ),               
+               appImage('assets/images/t13.jpg' ),               
+              
             ],
 
             //Slider Container properties
@@ -54,6 +55,15 @@ class assgnment8 extends StatelessWidget {
             viewportFraction: 0.8,
             )
           ),
+
+          
+          SizedBox(height: 25,),
+          vidHeading(),
+          Container(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child: appVideo(url: 'assets/videos/tabbarvid.mp4'),
+          ),
+          SizedBox(height: 25,),
         ],
       ),
     );

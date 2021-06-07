@@ -5,6 +5,7 @@ import '../../sidebar.dart';
 import '../Description.dart';
 import '../AppImages.dart';
 import '../AppVideo.dart';
+import '../vidHeading.dart';
 
 class assgnment5 extends StatelessWidget {
   const assgnment5({Key? key}) : super(key: key);
@@ -46,6 +47,14 @@ class assgnment5 extends StatelessWidget {
             viewportFraction: 0.8,
             )
           ),
+
+          SizedBox(height: 25,),
+          vidHeading(),
+          Container(
+            padding: EdgeInsets.fromLTRB(10, 0, 10, 0),
+            child:   appVideo(url: 'assets/videos/drawervid.mp4'),
+          ),
+          SizedBox(height: 25,),
         ],
       ),
     );

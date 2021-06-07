@@ -8,7 +8,7 @@ class appVideo extends StatefulWidget {
 
   @override
   _appVideoState createState() => _appVideoState();
-}
+} 
 
 class _appVideoState extends State<appVideo> {
   late VideoPlayerController _vidController;
@@ -32,41 +32,42 @@ class _appVideoState extends State<appVideo> {
 
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-        child: Stack(children: [
-      FutureBuilder(
-        future: _initializeVideoPlayerFuture,
-        builder: (context, snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            return AspectRatio(
-              aspectRatio: _vidController.value.aspectRatio,
-              child: VideoPlayer(_vidController),
-            );
-          } else {
-            return Center(
-              child: CircularProgressIndicator(
-                color: Color(0xFF40c8c4),
-              ),
-            );
-          }
-        },
-      ),
-      Positioned(
-        right: 5.0,
-        bottom: 0.0,
-        child: FloatingActionButton(
-          backgroundColor: Color(0xFF595386),
-          onPressed: () {
-            setState(() {
-              if (_vidController.value.isPlaying) {
-                _vidController.pause();
+        child: Stack(
+          children: [
+            FutureBuilder(
+            future: _initializeVideoPlayerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                return AspectRatio(
+                  aspectRatio: _vidController.value.aspectRatio,
+                  child: VideoPlayer(_vidController),
+                );
               } else {
-                _vidController.play();
+                return Center(
+                  child: CircularProgressIndicator(
+                    color: Color(0xFF40c8c4),
+                  ),
+                );
               }
-            });
-          },
-          child: Icon(
-            _vidController.value.isPlaying ? Icons.pause : Icons.play_arrow,
-          )
+            },
+          ),
+          Positioned(
+            right: 5.0,
+            bottom: 0.0,
+            child: FloatingActionButton(
+              backgroundColor: Color(0xFF595386),
+              onPressed: () {
+                setState(() {
+                  if (_vidController.value.isPlaying) {
+                    _vidController.pause();
+                  } else {
+                    _vidController.play();
+                  }
+                });
+              },
+              child: Icon(
+                _vidController.value.isPlaying ? Icons.pause : Icons.play_arrow,
+              )
         )
         
         
