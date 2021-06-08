@@ -7,3 +7,4 @@ Widget vidHeading() {
         style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
   );
 }
+ 

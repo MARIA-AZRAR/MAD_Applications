@@ -5,7 +5,7 @@ Widget description(String _description){
     alignment: Alignment.center,
     child: Text(
       _description,
-       textAlign: TextAlign.center,
+       textAlign: TextAlign.center, 
        style: TextStyle(
          fontSize: 24
        ),
