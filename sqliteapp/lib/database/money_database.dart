@@ -186,7 +186,7 @@ class MoneyDatabase {
     }
   }  
 
-  Future<void> deleteUser(int id) async {
+  Future<void> deleteAccount(int id) async {
     final db = await database;
     await db.delete(
       'Accounts',
@@ -194,6 +194,18 @@ class MoneyDatabase {
       whereArgs: [id],
     );
   }
+
+  Future<int> updateAccount(Accounts account) async {
+    
+  final db = await database;
+  var res = await db.update(
+    'Accounts',
+    account.toMap(),
+    where: 'accountId = ?',
+    whereArgs: [account.accountId],
+  );
+  return res;
+}
 
 
 }

@@ -27,6 +27,15 @@ class _viewAccountsState extends State<viewAccounts> {
   String? type = 'Expense';
 
   List<String>? typeList = ['Expense', 'Revenue'];
+  Future<List<Accounts>>? _listFuture;
+
+
+  @override
+    void initState() {
+    super.initState();
+    // initial load
+    _listFuture = MoneyDatabase.instance.getAllAccounts();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -90,7 +99,7 @@ class _viewAccountsState extends State<viewAccounts> {
                 decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(26),
                 color: Color(0xFFF1E6FF),
-            ),
+              ),
                 child:  ListTile(
                 title: DropdownButton<String>(
                     value: type,
@@ -179,8 +188,11 @@ class _viewAccountsState extends State<viewAccounts> {
               ),
                SizedBox(height: screenSize.height * 0.03),
 
-              FutureBuilder(
-                future: MoneyDatabase.instance.getAllAccounts(),
+                ListView(
+                  shrinkWrap: true,
+               children: [ 
+                FutureBuilder(
+                future: _listFuture,
                 builder: (BuildContext context, AsyncSnapshot<List<Accounts>> snapshot) {
                 if (snapshot.hasData) {
                   return ListView.builder(
@@ -198,7 +210,7 @@ class _viewAccountsState extends State<viewAccounts> {
                     ),
                    key: ValueKey<int>(snapshot.data![index].accountId!),
                    onDismissed: (DismissDirection direction) async {
-                    await MoneyDatabase.instance.deleteUser(snapshot.data![index].accountId!);
+                    await MoneyDatabase.instance.deleteAccount(snapshot.data![index].accountId!);
                     setState(() {
                       snapshot.data!.remove(snapshot.data![index]);
                     });
@@ -206,7 +218,14 @@ class _viewAccountsState extends State<viewAccounts> {
                   
                   child: Container(
                       width: screenSize.width,
-                      child: Card(
+                      child: GestureDetector(
+                        //to show values on text box
+                        onDoubleTap: () {
+                           setState(() {
+                           _title.text = snapshot.data![index].title;
+                          });
+                        },
+                      child: Card(  
                         color: Color(0xFFF1E6FF),
                         shadowColor: Color(0xFF6F35A5),
                         child: ListTile(
@@ -234,7 +253,23 @@ class _viewAccountsState extends State<viewAccounts> {
                                   width: screenSize.width * 0.1,
                                   child: IconButton(
                                   icon: Icon(Icons.edit),
-                                  onPressed: () {},
+                                  onPressed: () async {
+                                    //update
+                                  var account = Accounts(
+                                    accountId: snapshot.data![index].accountId,
+                                    title: _title.text!,
+                                    type: type!,
+                                  );
+
+
+                                   int res = await MoneyDatabase.instance.updateAccount(account);
+                                   setState(() {
+                                     _listFuture = MoneyDatabase.instance.getAllAccounts();
+                                    });
+                                   if(res == 1){
+                                     showAlertDialog(context, "User Updated Succssfulyy");
+                                   }
+                                  },
                                   color: Color(0xFF6F35A5),
                                 )),
                             ],
@@ -250,6 +285,7 @@ class _viewAccountsState extends State<viewAccounts> {
                   //   title: Text(snapshot.data![index].title),
                   //   subtitle: Text(snapshot.data![index].type.toString()),
                   // )),
+                  ),
                 );
               },
             );
@@ -257,9 +293,9 @@ class _viewAccountsState extends State<viewAccounts> {
             return Center(child: CircularProgressIndicator());
           }
         },
-      ),
-
-
+        ),
+               ]
+                ),
             ],
           ),
         ),
