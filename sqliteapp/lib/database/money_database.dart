@@ -207,5 +207,25 @@ class MoneyDatabase {
   return res;
 }
 
+//################################## TRANSACTIONS ###########################
+    // Define a function that inserts account into the database
+  Future<int> insertTransaction(User user) async {
+    // Get a reference to the database.
+    print(user);
+    try{
+    final db = await database;
+
+    await db.insert(
+      'Users',
+      user.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+    return 1;
+    }
+    catch(exception){
+      return 0;
+    }
+  }
+
 
 }

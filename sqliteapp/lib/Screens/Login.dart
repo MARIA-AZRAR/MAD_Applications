@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'Signup.dart';
 import 'package:sqliteapp/database/money_database.dart';
 import 'package:sqliteapp/models/user.dart';
-import 'viewTransactions.dart';
 import 'viewAccounts.dart';
 
 class Login extends StatefulWidget {
