@@ -108,7 +108,7 @@ Future consumerRegisteration() async {
   String email = _emailController.text;
   String phone = _phoneController.text;
 
-  var url = "https://pcc.edu.pk/ws/create/rs_consumers.php";
+ 
 
   var data = {
     'firstName': fistName,
@@ -117,6 +117,8 @@ Future consumerRegisteration() async {
     'email': email,
     'phone': phone
   };
+
+   var url = "https://pcc.edu.pk/ws/create/rs_consumers.php";
 
   var response = await http.post(Uri.parse(url), body: json.encode(data));
 

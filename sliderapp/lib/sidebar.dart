@@ -77,13 +77,13 @@ class Sidebar extends StatelessWidget {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => (assgnment7())));
               }),
-          // ListTile(
-          //     leading: circleICon("8"),
-          //     title: Text("Tabbar App"),
-          //     onTap: () {
-          //       Navigator.push(context,
-          //           MaterialPageRoute(builder: (context) => (assgnment8())));
-          //     }),
+          ListTile(
+              leading: circleICon("8"),
+              title: Text("Tabbar App"),
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => (assignment8())));
+              }),
         ],
       ),
     );

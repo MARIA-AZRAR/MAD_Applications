@@ -13,6 +13,7 @@ class ImagePickerWidget extends StatefulWidget {
   _ImagePickerWidgetState createState() => _ImagePickerWidgetState();
 }
 
+
 class _ImagePickerWidgetState extends State<ImagePickerWidget> {
   File? _image;
   String status = 'No Image Selected';
@@ -37,7 +38,8 @@ class _ImagePickerWidgetState extends State<ImagePickerWidget> {
 
   /// Select an image from gallery or camera
   Future<void> _pickImage(ImageSource source) async {
-    File selected =  await ImagePicker.pickImage(source: source, imageQuality: 50);
+    File selected =  await ImagePicker.pickImage(
+      source: source, imageQuality: 50);
 
     setStatus("Image Selected");
 

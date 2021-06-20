@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'sidebar.dart';
 import './widgets/Description.dart';
+import './widgets/Screens/assignment8.dart';
 void main() {
   runApp(MyApp());
 }
@@ -36,9 +37,12 @@ class _MyHomePageState extends State<MyHomePage> {
         backgroundColor: Color(0xFF40c8c4),
       ),
       drawer: Sidebar(),
-      body: Center(
-        child: description("Detailed Description of All Previous Assignments.")
-      )
+      body: assignment8(),
+      
+      
+      // Center(
+      //   child: description("Detailed Description of All Previous Assignments.")
+      // )
     );
   }
 }
