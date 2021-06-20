@@ -22,7 +22,8 @@ class _viewAccountsState extends State<viewAccounts> {
 
   Accounts? createdAccount;
   int? _id;
-  TextEditingController title = TextEditingController();
+  
+  TextEditingController _title = TextEditingController();
   String? type = 'Expense';
 
   List<String>? typeList = ['Expense', 'Revenue'];
@@ -58,7 +59,16 @@ class _viewAccountsState extends State<viewAccounts> {
                 width: screenSize.width * 0.8,
                 child: ListTile(
                   title: TextFormField(
-                    controller: title,
+                    validator: (value) {
+                        int len = value!.length;
+                        if (len == 0) {
+                          return "`name` cannot be empty";
+                        } else if (len < 4) {
+                          return "`name` must be longer than 3 characters";
+                        }
+                        return null;
+                      },
+                   controller: _title,
                     decoration: InputDecoration(
                       border: OutlineInputBorder(
                         borderSide: BorderSide.none,
@@ -134,11 +144,12 @@ class _viewAccountsState extends State<viewAccounts> {
                     ),
                   ),
                    onPressed: () async {
-                     _id = randomId(111111, 333333);
+                     if(this.formKey.currentState!.validate()){
+                        _id = randomId(111111, 333333);
 
                      var account = Accounts(
                         accountId: _id!,
-                        title: title.text!,
+                        title: _title.text!,
                         type: type!,
                       );
 
@@ -151,6 +162,9 @@ class _viewAccountsState extends State<viewAccounts> {
                       } else {
                         showAlertDialog(context, "User was not added");
                       }
+                     }else{
+                       showAlertDialog(context, "User not validated");
+                     }
                   },
                 )),
               ),
