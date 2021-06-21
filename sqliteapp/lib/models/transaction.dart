@@ -23,6 +23,8 @@ class Transactions {
   Map<String, dynamic> toMap() {  
     var map = new Map<String, dynamic>();  
     map['id'] = id; 
+    map['userId'] = userId;
+    map['accountId'] = accountId;
     map['description'] = description;
     map['drAmount'] = drAmount;
     map['CrAmount'] = CrAmount;  

@@ -36,9 +36,8 @@ class _viewTransactionsState extends State<viewTransactions> {
   void initState() {
     super.initState();
     // initial load
-    _listFuture = MoneyDatabase.instance.getUsersTransactions();
+    _listFuture = MoneyDatabase.instance.getUsersTransactions(this.widget.user!.id);
   }
-
   
   @override
   Widget build(BuildContext context) {
@@ -215,7 +214,7 @@ class _viewTransactionsState extends State<viewTransactions> {
                               accountId: accId!,
                               userId: this.widget.user!.id,
                               description: _description.text,
-                              drAmount: _amount.text!,
+                              drAmount: _amount.text,
                               transactionDate: convertedDate!,
                               type: accountType,
                             ) : Transactions(
@@ -223,22 +222,19 @@ class _viewTransactionsState extends State<viewTransactions> {
                               accountId: accId!,
                               userId: this.widget.user!.id,
                               description: _description.text,
-                              drAmount:  _amount.text!,
+                              drAmount:  _amount.text,
                               transactionDate: convertedDate!,
                               type: accountType,
                               );
                            
-                           
-                            int response = await MoneyDatabase.instance.insertTransaction(transaction);
+                               int response = await MoneyDatabase.instance.insertTransaction(transaction);
 
                               if (response == 1) {
                                 String msg = "Transaction made successfully to this Account " + _accountId.text;
-                                var response = await MoneyDatabase.instance.getUsersTransactions();
-                                
-                              
+
                                 showAlertDialog(context, msg);
                                 setState(() {
-                                  _listFuture = MoneyDatabase.instance.getUsersTransactions();
+                                  _listFuture = MoneyDatabase.instance.getUsersTransactions(this.widget.user!.id);
                                 });
                               } else {
                                 showAlertDialog(context, "Transaction was not added");
@@ -337,11 +333,11 @@ class _viewTransactionsState extends State<viewTransactions> {
                                                 1, 16, 1, 16),
                                             width: screenSize.width * 0.19,
                                             
-                                            child: Text((DateTime.fromMillisecondsSinceEpoch(snapshot.data![index].transactionDate)).toString())
+                                            child: Text(((DateTime.fromMillisecondsSinceEpoch(snapshot.data![index].transactionDate)).toString()).substring(0,10))
                                         ),
-                                            //Text(snapshot.data![index].id.toString())),
+                                            
                                         Container(
-                                            //  padding: EdgeInsets.all(16),
+                                           
                                             padding: EdgeInsets.fromLTRB(
                                                 1, 16, 1, 16),
                                             width: screenSize.width * 0.19,

@@ -239,7 +239,7 @@ class MoneyDatabase {
 //################################## TRANSACTIONS ###########################
     // Define a function that inserts transaction into the database
   Future<int> insertTransaction(Transactions transaction) async {
-    // Get a reference to the database.
+    // Get a reference to the database
     
     try{
     final db = await database;
@@ -258,11 +258,11 @@ class MoneyDatabase {
 
 
   // A method that retrieves all the accounts from the
-  Future<List<Transactions>> getUsersTransactions() async {
+  Future<List<Transactions>> getUsersTransactions(int _id) async {
     // Get a reference to the database.
     final db = await database;
 
-    final List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Transactions");  
+    final List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Transactions where userId = '${_id}'");  
     
     String? amount;
     // Convert the List<Map<String, dynamic> into a List<Users>.
