@@ -16,6 +16,12 @@ class _viewReportsState extends State<viewReports> {
     return Scaffold(
       drawer: Sidebar(this.widget.user),
       backgroundColor: Colors.white,
+       appBar: PreferredSize(
+          preferredSize: Size.fromHeight(50.0), // here the desired height
+          child: AppBar(
+            backgroundColor: Color(0xFF6F35A5),
+            title: Text("Reports"),
+          )),
       body: Text("Reports"),
     );
   }

@@ -6,6 +6,7 @@ import 'package:sqflite/sqflite.dart';
 import 'package:sqliteapp/models/user.dart';
 import 'package:path_provider/path_provider.dart';
 import '../models/account.dart';
+import '../models/transaction.dart';
 
 // void MoneyDatabase() async {
 //   WidgetsFlutterBinding.ensureInitialized();
@@ -69,7 +70,7 @@ class MoneyDatabase {
         'CREATE TABLE Accounts(accountId INTEGER PRIMARY KEY, title TEXT, type TEXT)',
       );
       await db.execute(
-        'CREATE TABLE Transactions(id INTEGER PRIMARY KEY, accountId INTEGER, userId INTEGER ,description TEXT, drAmount TEXT, CrAmount TEXT, transactionDate INTEGER)',
+        'CREATE TABLE Transactions(id INTEGER PRIMARY KEY, accountId INTEGER, userId INTEGER ,description TEXT, drAmount TEXT, CrAmount TEXT, transactionDate INTEGER, type TEXT)',
       );
     });
   }
@@ -175,14 +176,42 @@ class MoneyDatabase {
   }
 
 //check if account exists
-  Future<int> validateAccount(int id) async {  
+  Future<int> validateAccount(String _id) async {  
+    int? id;
+    try {
+      id = int.parse(_id);
+    } on FormatException {
+      print("Exception occured");
+    }
+    
     final db = await database;  
     var response = await db.rawQuery("SELECT * FROM Accounts WHERE accountId = '$id'");  
-      
+
     if (response.length > 0) {  
-       return 1;
+      print("in here");
+      print(response.length);
+       return response.length ;
     }else{
-      return 0;
+      print("ehy");
+      return response.length ;
+    }
+  }  
+
+  //check if account exists
+  Future<String> getSingleAccount(String _id) async { 
+    int? id;
+    try {
+      id = int.parse(_id);
+    } on FormatException {
+      print("Exception occured");
+    }
+     
+    final db = await database;  
+    final List<Map<String, dynamic>> response = await db.rawQuery("SELECT type FROM Accounts WHERE accountId = '$id' limit 1");  
+    if (response.length > 0) {  
+      return response[0]['type'];
+    }else{
+      return "true";
     }
   }  
 
@@ -208,16 +237,16 @@ class MoneyDatabase {
 }
 
 //################################## TRANSACTIONS ###########################
-    // Define a function that inserts account into the database
-  Future<int> insertTransaction(User user) async {
+    // Define a function that inserts transaction into the database
+  Future<int> insertTransaction(Transactions transaction) async {
     // Get a reference to the database.
-    print(user);
+    
     try{
     final db = await database;
 
     await db.insert(
-      'Users',
-      user.toMap(),
+      'Transactions',
+      transaction.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
     return 1;
@@ -226,6 +255,46 @@ class MoneyDatabase {
       return 0;
     }
   }
+
+
+  // A method that retrieves all the accounts from the
+  Future<List<Transactions>> getUsersTransactions() async {
+    // Get a reference to the database.
+    final db = await database;
+
+    final List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Transactions");  
+    
+    String? amount;
+    // Convert the List<Map<String, dynamic> into a List<Users>.
+    return List.generate(maps.length, (i) {
+      if(maps[i]['drAmount'] != null){
+        print("In here");
+        amount = maps[i]['drAmount']; 
+      }else{
+        amount = maps[i]['CrAmount'];
+      }
+      return Transactions(
+        id: maps[i]['id'],
+        userId: maps[i]['userId'],
+        accountId: maps[i]['accountId'],
+        description: maps[i]['description'],
+        transactionDate: maps[i]['transactionDate'],
+        type: maps[i]['type'],
+        drAmount: amount,
+      );
+    });
+  }
+
+
+    Future<void> deleteTransaction(int _id) async {
+    final db = await database;
+    await db.delete(
+      'Transactions',
+      where: "id = ?",
+      whereArgs: [_id],
+    );
+  }
+
 
 
 }

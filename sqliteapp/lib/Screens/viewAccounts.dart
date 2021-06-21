@@ -8,7 +8,6 @@ import 'package:sqliteapp/models/account.dart';
 import 'package:sqliteapp/models/user.dart';
 import '../components/drawerS.dart';
 
-
 class viewAccounts extends StatefulWidget {
   viewAccounts({Key? key, this.user}) : super(key: key);
 
@@ -169,11 +168,15 @@ class _viewAccountsState extends State<viewAccounts> {
                               "Account added successfully. Here is your AccountID: " +
                                   _id.toString();
                           showAlertDialog(context, msg);
+                          setState(() {
+                            _listFuture =
+                                MoneyDatabase.instance.getAllAccounts();
+                          });
                         } else {
-                          showAlertDialog(context, "User was not added");
+                          showAlertDialog(context, "Account was not added");
                         }
                       } else {
-                        showAlertDialog(context, "User not validated");
+                        print("User not validated");
                       }
                     },
                   )),
@@ -296,7 +299,10 @@ class _viewAccountsState extends State<viewAccounts> {
                         return Center(child: CircularProgressIndicator());
                       }
                     },
+
+                    
                   ),
+                  SizedBox(height: screenSize.height * 0.09),
                 ]),
               ],
             ),
