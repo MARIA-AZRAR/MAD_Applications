@@ -297,7 +297,7 @@ class MoneyDatabase {
     );
   }
 
-  //####################################### REPORTS ######################################
+  //####################################### REPORTS FOR EXPENSE/ REVENUE######################################
 
   // A method that retrieves aily data from the
   Future<List<Transactions>> getDailyData(int _id, String _type) async {
@@ -466,6 +466,48 @@ class MoneyDatabase {
 
   }
 
+
+  // A method that retrieves all the accounts from the
+  Future<List<Transactions>> getperodicallyData(int _id, String _type) async {
+    // Get a reference to the database.
+    final db = await database;
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery("SELECT * FROM Transactions where userId = '${_id}'");
+
+    final now = DateTime.now();
+    DateTime current = DateTime(now.year);
+    String? amount;
+
+    List<Transactions> transactionList = [];
+
+    for(int i = 0; i< maps.length; ++i) {
+      if (maps[i]['drAmount'] != null) {
+        amount = maps[i]['drAmount'];
+      } else {
+        amount = maps[i]['CrAmount'];
+      }
+
+      DateTime tranDate =
+          DateTime.fromMillisecondsSinceEpoch(maps[i]['transactionDate']);
+      DateTime prevDate = DateTime(tranDate.year);
+
+      if (prevDate == current && maps[i]['type'] == _type) {
+        print("That's same year");
+         transactionList.add(Transactions(
+          id: maps[i]['id'],
+          userId: maps[i]['userId'],
+          accountId: maps[i]['accountId'],
+          description: maps[i]['description'],
+          transactionDate: maps[i]['transactionDate'],
+          type: maps[i]['type'],
+          drAmount: amount,
+        ));
+      }
+    }
+    print(transactionList.length);
+     return transactionList;
+
+  }
 
 
 }

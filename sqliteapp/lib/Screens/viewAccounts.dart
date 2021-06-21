@@ -190,120 +190,125 @@ class _viewAccountsState extends State<viewAccounts> {
                   ),
                 ),
                 SizedBox(height: screenSize.height * 0.03),
-                ListView(shrinkWrap: true, children: [
-                  FutureBuilder(
-                    future: _listFuture,
-                    builder: (BuildContext context,
-                        AsyncSnapshot<List<Accounts>> snapshot) {
-                      if (snapshot.hasData) {
-                        return ListView.builder(
-                          scrollDirection: Axis.vertical,
-                          shrinkWrap: true,
-                          itemCount: snapshot.data?.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return Dismissible(
-                              direction: DismissDirection.endToStart,
-                              background: Container(
-                                color: Colors.red[900],
-                                alignment: Alignment.centerRight,
-                                padding: EdgeInsets.symmetric(horizontal: 10.0),
-                                child: Icon(Icons.delete_forever),
-                              ),
-                              key: ValueKey<int>(
-                                  snapshot.data![index].accountId),
-                              onDismissed: (DismissDirection direction) async {
-                                await MoneyDatabase.instance.deleteAccount(
-                                    snapshot.data![index].accountId);
-                                setState(() {
-                                  snapshot.data!.remove(snapshot.data![index]);
-                                });
-                              },
-                              child: Container(
-                                width: screenSize.width,
-                                child: GestureDetector(
-                                  //to show values on text box
-                                  onDoubleTap: () {
-                                    setState(() {
-                                      _title.text = snapshot.data![index].title;
-                                    });
-                                  },
-                                  child: Card(
-                                    color: Color(0xFFF1E6FF),
-                                    shadowColor: Color(0xFF6F35A5),
-                                    child: ListTile(
-                                        title: Row(
-                                      mainAxisSize: MainAxisSize.min,
-                                      children: [
-                                        Container(
-                                            // padding: EdgeInsets.all(16),
-                                            padding: EdgeInsets.fromLTRB(
-                                                1, 16, 1, 16),
-                                            width: screenSize.width * 0.24,
-                                            child: Text(snapshot
-                                                .data![index].accountId
-                                                .toString())),
-                                        Container(
-                                            //  padding: EdgeInsets.all(16),
-                                            padding: EdgeInsets.fromLTRB(
-                                                1, 16, 1, 16),
-                                            width: screenSize.width * 0.24,
-                                            child: Text(
-                                                snapshot.data![index].title)),
-                                        Container(
-                                            // padding: EdgeInsets.all(16),
-                                            padding: EdgeInsets.fromLTRB(
-                                                19, 16, 0, 16),
-                                            width: screenSize.width * 0.24,
-                                            child: Text(
-                                                snapshot.data![index].type)),
-                                        Container(
-                                            // padding: EdgeInsets.all(16),
-                                            padding: EdgeInsets.fromLTRB(
-                                                19, 16, 0, 16),
-                                            width: screenSize.width * 0.1,
-                                            child: IconButton(
-                                              icon: Icon(Icons.edit),
-                                              onPressed: () async {
-                                                //update
-                                                var account = Accounts(
-                                                  accountId: snapshot
-                                                      .data![index].accountId,
-                                                  title: _title.text,
-                                                  type: type!,
-                                                );
+                ListView(
+                  shrinkWrap: true,
+                  children: [
+                    FutureBuilder(
+                      future: _listFuture,
+                      builder: (BuildContext context,
+                          AsyncSnapshot<List<Accounts>> snapshot) {
+                        if (snapshot.hasData) {
+                          return ListView.builder(
+                            scrollDirection: Axis.vertical,
+                            shrinkWrap: true,
+                            itemCount: snapshot.data?.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return Dismissible(
+                                direction: DismissDirection.endToStart,
+                                background: Container(
+                                  color: Colors.red[900],
+                                  alignment: Alignment.centerRight,
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 10.0),
+                                  child: Icon(Icons.delete_forever),
+                                ),
+                                key: ValueKey<int>(
+                                    snapshot.data![index].accountId),
+                                onDismissed:
+                                    (DismissDirection direction) async {
+                                  await MoneyDatabase.instance.deleteAccount(
+                                      snapshot.data![index].accountId);
+                                  setState(() {
+                                    snapshot.data!
+                                        .remove(snapshot.data![index]);
+                                  });
+                                },
+                                child: Container(
+                                  width: screenSize.width,
+                                  child: GestureDetector(
+                                    //to show values on text box
+                                    onDoubleTap: () {
+                                      setState(() {
+                                        _title.text =
+                                            snapshot.data![index].title;
+                                      });
+                                    },
+                                    child: Card(
+                                      color: Color(0xFFF1E6FF),
+                                      shadowColor: Color(0xFF6F35A5),
+                                      child: ListTile(
+                                          title: Row(
+                                        mainAxisSize: MainAxisSize.min,
+                                        children: [
+                                          Container(
+                                              // padding: EdgeInsets.all(16),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  1, 16, 1, 16),
+                                              width: screenSize.width * 0.24,
+                                              child: Text(snapshot
+                                                  .data![index].accountId
+                                                  .toString())),
+                                          Container(
+                                              //  padding: EdgeInsets.all(16),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  1, 16, 1, 16),
+                                              width: screenSize.width * 0.24,
+                                              child: Text(
+                                                  snapshot.data![index].title)),
+                                          Container(
+                                              // padding: EdgeInsets.all(16),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  19, 16, 0, 16),
+                                              width: screenSize.width * 0.24,
+                                              child: Text(
+                                                  snapshot.data![index].type)),
+                                          Container(
+                                              // padding: EdgeInsets.all(16),
+                                              padding: EdgeInsets.fromLTRB(
+                                                  19, 16, 0, 16),
+                                              width: screenSize.width * 0.1,
+                                              child: IconButton(
+                                                icon: Icon(Icons.edit),
+                                                onPressed: () async {
+                                                  //update
+                                                  var account = Accounts(
+                                                    accountId: snapshot
+                                                        .data![index].accountId,
+                                                    title: _title.text,
+                                                    type: type!,
+                                                  );
 
-                                                int res = await MoneyDatabase
-                                                    .instance
-                                                    .updateAccount(account);
-                                                setState(() {
-                                                  _listFuture = MoneyDatabase
+                                                  int res = await MoneyDatabase
                                                       .instance
-                                                      .getAllAccounts();
-                                                });
-                                                if (res == 1) {
-                                                  showAlertDialog(context,
-                                                      "Accounts Updated Succssfulyy");
-                                                }
-                                              },
-                                              color: Color(0xFF6F35A5),
-                                            )),
-                                      ],
-                                    )),
+                                                      .updateAccount(account);
+                                                  setState(() {
+                                                    _listFuture = MoneyDatabase
+                                                        .instance
+                                                        .getAllAccounts();
+                                                  });
+                                                  if (res == 1) {
+                                                    showAlertDialog(context,
+                                                        "Accounts Updated Succssfulyy");
+                                                  }
+                                                },
+                                                color: Color(0xFF6F35A5),
+                                              )),
+                                        ],
+                                      )),
+                                    ),
                                   ),
                                 ),
-                              ),
-                            );
-                          },
-                        );
-                      } else {
-                        return Center(child: CircularProgressIndicator());
-                      }
-                    },
-
-                    
-                  ),
-                  SizedBox(height: screenSize.height * 0.09),
-                ]),
+                              );
+                            },
+                          );
+                        } else {
+                          return Center(child: CircularProgressIndicator());
+                        }
+                      },
+                    ),
+                  ],
+                ),
+                SizedBox(height: screenSize.height * 0.09),
               ],
             ),
           ),
@@ -312,3 +317,5 @@ class _viewAccountsState extends State<viewAccounts> {
     );
   }
 }
+
+

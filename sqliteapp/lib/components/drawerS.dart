@@ -46,7 +46,7 @@ class Sidebar extends StatelessWidget {
               }),
           ListTile(
               leading: Icon(Icons.document_scanner, color: Color(0xFF6F35A5),),
-              title: Text("Drawer App"),
+              title: Text("Reports"),
               onTap: () {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => (viewReports(user: user))));

@@ -1,81 +1,21 @@
 import 'package:flutter/material.dart';
 import 'package:sqliteapp/database/money_database.dart';
-import '../components/drawerS.dart';
-import '../models/user.dart';
-import '../models/transaction.dart';
-import 'Reports/bothReports.dart';
+import '../../components/drawerS.dart';
+import '../../models/user.dart';
+import '../../models/transaction.dart';
 
-class viewReports extends StatefulWidget {
-  viewReports({Key? key, this.user}) : super(key: key);
+
+class bothReports extends StatefulWidget {
+  bothReports({Key? key, this.user}) : super(key: key);
   final User? user;
 
   @override
-  _viewReportsState createState() => _viewReportsState();
+  _bothReportsState createState() => _bothReportsState();
 }
 
-class _viewReportsState extends State<viewReports> {
-  @override
-  Widget build(BuildContext context) {
-    return DefaultTabController(
-      initialIndex: 0,
-      length: 3,
-      child: Scaffold(
-        drawer: Sidebar(this.widget.user),
-        backgroundColor: Colors.white,
-        appBar: PreferredSize(
-          preferredSize: Size.fromHeight(100.0), // here the desired height
-          child: AppBar(
-              backgroundColor: Color(0xFF6F35A5),
-              title: Text("Reports"),
-              bottom: TabBar(tabs: [
-                Tab(
-                  icon: Icon(
-                    Icons.money_off,
-                  ),
-                  text: "Expense",
-                ),
-                Tab(
-                  icon: Icon(Icons.money),
-                  text: "Revenue",
-                ),
-                Tab(
-                  icon: Icon(Icons.attach_money),
-                  text: "Both",
-                ),
-              ])),
-        ),
-        body: TabBarView(
-          children: [
-            report(
-              user: this.widget.user,
-              type: 'Expense',
-              keyword: 'transferred to',
-            ),
-            report(
-              user: this.widget.user,
-              type: 'Revenue',
-              keyword: 'Paid to',
-            ),
-            bothReports(user: this.widget.user),
-          ],
-        ),
-      ),
-    );
-  }
-}
-
-class report extends StatefulWidget {
-  report({Key? key, this.user, this.type, this.keyword}) : super(key: key);
-  final User? user;
-  final String? type;
-  final String? keyword;
-
-  @override
-  _reportState createState() => _reportState();
-}
-
-class _reportState extends State<report> {
-  Future<List<Transactions>>? _listFuture;
+class _bothReportsState extends State<bothReports> {
+  Future<List<Transactions>>? _listFutureExpense;
+  Future<List<Transactions>>? _listFutureRevenue;
   String? reportTime = 'Daily';
 
   List<String>? reportTimeList = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
@@ -85,8 +25,10 @@ class _reportState extends State<report> {
   void initState() {
     super.initState();
     // initial load
-    _listFuture = MoneyDatabase.instance
-        .getDailyData(this.widget.user!.id, this.widget.type!);
+    _listFutureExpense =
+        MoneyDatabase.instance.getDailyData(this.widget.user!.id, 'Expense');
+    _listFutureRevenue =
+        MoneyDatabase.instance.getDailyData(this.widget.user!.id, 'Revenue');
   }
 
   DateTime currentDate = DateTime.now();
@@ -170,7 +112,7 @@ class _reportState extends State<report> {
                     );
                   }).toList(),
                   hint: Text(
-                    "Please select account type",
+                    "Please select time",
                     style: TextStyle(
                         fontSize: 16, height: 2, color: Colors.grey[700]),
                   ),
@@ -199,23 +141,31 @@ class _reportState extends State<report> {
                 onPressed: () async {
                   if (reportTime == 'Daily') {
                     setState(() {
-                      _listFuture = MoneyDatabase.instance.getDailyData(
-                          this.widget.user!.id, this.widget.type!);
+                      _listFutureRevenue = MoneyDatabase.instance
+                          .getDailyData(this.widget.user!.id, 'Revenue');
+                      _listFutureExpense = MoneyDatabase.instance
+                          .getDailyData(this.widget.user!.id, 'Expense');
                     });
                   } else if (reportTime == 'Weekly') {
                     setState(() {
-                      _listFuture = MoneyDatabase.instance.getWeeklyData(
-                          this.widget.user!.id, this.widget.type!);
+                      _listFutureRevenue = MoneyDatabase.instance
+                          .getWeeklyData(this.widget.user!.id, 'Revenue');
+                      _listFutureExpense = MoneyDatabase.instance
+                          .getWeeklyData(this.widget.user!.id, 'Expense');
                     });
                   } else if (reportTime == 'Monthly') {
                     setState(() {
-                      _listFuture = MoneyDatabase.instance.getMonthlyData(
-                          this.widget.user!.id, this.widget.type!);
+                      _listFutureRevenue = MoneyDatabase.instance
+                          .getMonthlyData(this.widget.user!.id, 'Revenue');
+                      _listFutureExpense = MoneyDatabase.instance
+                          .getMonthlyData(this.widget.user!.id, 'Expense');
                     });
                   } else {
                     setState(() {
-                      _listFuture = MoneyDatabase.instance.getYearlyData(
-                          this.widget.user!.id, this.widget.type!);
+                      _listFutureRevenue = MoneyDatabase.instance
+                          .getYearlyData(this.widget.user!.id, 'Revenue');
+                      _listFutureExpense = MoneyDatabase.instance
+                          .getYearlyData(this.widget.user!.id, 'Expense');
                     });
                   }
                 },
@@ -300,33 +250,65 @@ class _reportState extends State<report> {
               ),
             ),
             SizedBox(height: screenSize.height * 0.03),
-            ListView(shrinkWrap: true, children: [
-              FutureBuilder(
-                future: _listFuture,
-                builder: (BuildContext context,
-                    AsyncSnapshot<List<Transactions>> snapshot) {
-                  if (snapshot.hasData) {
-                    return ListView.builder(
-                      physics: const AlwaysScrollableScrollPhysics(),
-                      scrollDirection: Axis.vertical,
-                      shrinkWrap: true,
-                      itemCount: snapshot.data?.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          padding: EdgeInsets.all(16),
-                          width: screenSize.width * 95,
-                          child: Text(
-                            "On '${(DateTime.fromMillisecondsSinceEpoch(snapshot.data![index].transactionDate)).toString().substring(0, 10)}' amount of RS'${snapshot.data![index].drAmount}'/- was '${this.widget.keyword!}' account '${snapshot.data![index].accountId}' which was '${snapshot.data![index].description}'",
-                          ),
+            ListView(
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: [
+                  FutureBuilder(
+                    future: _listFutureExpense,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Transactions>> snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              padding: EdgeInsets.all(16),
+                              width: screenSize.width * 95,
+                              child: Text(
+                                "On '${(DateTime.fromMillisecondsSinceEpoch(snapshot.data![index].transactionDate)).toString().substring(0, 10)}' amount of RS'${snapshot.data![index].drAmount}'/- was transferred to account '${snapshot.data![index].accountId}' which was '${snapshot.data![index].description}'",
+                              ),
+                            );
+                          },
                         );
-                      },
-                    );
-                  } else {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                },
-              ),
-            ]),
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                ]),
+            SizedBox(height: screenSize.height * 0.03),
+            ListView(
+                shrinkWrap: true,
+                physics: const AlwaysScrollableScrollPhysics(),
+                children: [
+                  FutureBuilder(
+                    future: _listFutureRevenue,
+                    builder: (BuildContext context,
+                        AsyncSnapshot<List<Transactions>> snapshot) {
+                      if (snapshot.hasData) {
+                        return ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              padding: EdgeInsets.all(16),
+                              width: screenSize.width * 95,
+                              child: Text(
+                                "On '${(DateTime.fromMillisecondsSinceEpoch(snapshot.data![index].transactionDate)).toString().substring(0, 10)}' amount of RS'${snapshot.data![index].drAmount}'/- was recieved from account '${snapshot.data![index].accountId}' which was '${snapshot.data![index].description}'",
+                              ),
+                            );
+                          },
+                        );
+                      } else {
+                        return Center(child: CircularProgressIndicator());
+                      }
+                    },
+                  ),
+                ]),
             SizedBox(height: screenSize.height * 0.03),
           ],
         ),
