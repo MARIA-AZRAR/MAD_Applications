@@ -116,7 +116,7 @@ class _viewTransactionsState extends State<viewTransactions> {
                       },
                       controller: _description,
                       
-                     // maxLines: 4,
+                      maxLines: 4,
                       decoration: InputDecoration(
                       
                         border: OutlineInputBorder(

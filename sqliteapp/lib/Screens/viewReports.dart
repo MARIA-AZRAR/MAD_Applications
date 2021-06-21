@@ -79,8 +79,8 @@ class _reportState extends State<report> {
   String? reportTime = 'Daily';
 
   List<String>? reportTimeList = ['Daily', 'Weekly', 'Monthly', 'Yearly'];
-  DateTime? startDate;
-  DateTime? endDate;
+  DateTime startDate = DateTime.now();
+  DateTime endDate = DateTime.now();
 
   void initState() {
     super.initState();
@@ -233,7 +233,7 @@ class _reportState extends State<report> {
                     child: Text(
                       flagD
                           ? startValueD
-                          : "${startDate!.day} - ${startDate!.month} - ${startDate!.year}",
+                          : "${startDate.day} - ${startDate.month} - ${startDate.year}",
                       style: TextStyle(
                         shadows: [
                           Shadow(color: Colors.black, offset: Offset(0, -10))
@@ -254,7 +254,7 @@ class _reportState extends State<report> {
                     child: Text(
                       flagD
                           ? endValueD
-                          : "${endDate!.day} - ${endDate!.month} - ${endDate!.year}",
+                          : "${endDate.day} - ${endDate.month} - ${endDate.year}",
                       style: TextStyle(
                         shadows: [
                           Shadow(color: Colors.black, offset: Offset(0, -10))
@@ -288,7 +288,12 @@ class _reportState extends State<report> {
                     style: TextStyle(fontSize: 12, color: Colors.white),
                   ),
                 ),
-                onPressed: () async {},
+                onPressed: () async {
+                  setState(() {
+                    _listFuture=  MoneyDatabase.instance.getperodicallyData(this.widget.user!.id,startDate, endDate, this.widget.type!);                    
+                  });
+
+                },
               )),
             ),
             SizedBox(height: screenSize.height * 0.03),

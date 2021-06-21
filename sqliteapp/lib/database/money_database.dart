@@ -468,14 +468,13 @@ class MoneyDatabase {
 
 
   // A method that retrieves all the accounts from the
-  Future<List<Transactions>> getperodicallyData(int _id, String _type) async {
+  Future<List<Transactions>> getperodicallyData(int _id, DateTime _start, DateTime _end, String _type) async {
     // Get a reference to the database.
     final db = await database;
     final List<Map<String, dynamic>> maps =
         await db.rawQuery("SELECT * FROM Transactions where userId = '${_id}'");
 
-    final now = DateTime.now();
-    DateTime current = DateTime(now.year);
+    
     String? amount;
 
     List<Transactions> transactionList = [];
@@ -487,12 +486,11 @@ class MoneyDatabase {
         amount = maps[i]['CrAmount'];
       }
 
-      DateTime tranDate =
-          DateTime.fromMillisecondsSinceEpoch(maps[i]['transactionDate']);
-      DateTime prevDate = DateTime(tranDate.year);
+      DateTime tranDate = DateTime.fromMillisecondsSinceEpoch(maps[i]['transactionDate']);
+   
 
-      if (prevDate == current && maps[i]['type'] == _type) {
-        print("That's same year");
+      if (_start.isBefore(tranDate) && _end.isAfter(tranDate)  && maps[i]['type'] == _type ) {
+        print("date is in between");
          transactionList.add(Transactions(
           id: maps[i]['id'],
           userId: maps[i]['userId'],

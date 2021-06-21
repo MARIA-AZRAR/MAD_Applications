@@ -189,7 +189,28 @@ class _viewAccountsState extends State<viewAccounts> {
                     fontSize: 19,
                   ),
                 ),
-                SizedBox(height: screenSize.height * 0.03),
+                
+                 SizedBox(height: screenSize.height * 0.03),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Container(
+                      width: screenSize.width * 0.19,
+                      padding: EdgeInsets.fromLTRB(1, 16, 1, 16),
+                      child:  Text("ID", style: TextStyle(fontWeight: FontWeight.bold),),
+                    ),
+                    Container(
+                      width: screenSize.width * 0.19,
+                      padding: EdgeInsets.fromLTRB(1, 16, 1, 16),
+                      child:  Text("Title",  style: TextStyle(fontWeight: FontWeight.bold),),
+                    ),
+                    Container(
+                      width: screenSize.width * 0.19,
+                      padding: EdgeInsets.fromLTRB(1, 16, 1, 16),
+                      child: Text("Type",  style: TextStyle(fontWeight: FontWeight.bold),),
+                    )
+                  ],
+                ),
                 ListView(
                   shrinkWrap: true,
                   children: [
