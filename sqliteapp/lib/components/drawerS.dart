@@ -23,8 +23,8 @@ class Sidebar extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Color(0xFF6F35A5)
             ),
-            accountName: Text("Maria Azrar"),
-            accountEmail: Text("Mariaazrar2000@gmail.com"),
+            accountName: Text(this.user!.name),
+            accountEmail: Text(this.user!.phone),
             currentAccountPicture: ClipOval(
               child: Image.network(
                   "https://avatars.githubusercontent.com/u/55192319?v=4"),

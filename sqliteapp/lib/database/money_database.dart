@@ -285,6 +285,17 @@ class MoneyDatabase {
     });
   }
 
+  Future<int> updateTransaction(Transactions transaction) async {
+    
+  final db = await database;
+  var res = await db.update(
+    'Transactions',
+    transaction.toMap(),
+    where: 'id = ?',
+    whereArgs: [transaction.id],
+  );
+  return res;
+}
 
     Future<void> deleteTransaction(int _id) async {
     final db = await database;

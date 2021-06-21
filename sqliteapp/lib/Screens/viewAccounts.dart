@@ -282,7 +282,7 @@ class _viewAccountsState extends State<viewAccounts> {
                                                 });
                                                 if (res == 1) {
                                                   showAlertDialog(context,
-                                                      "User Updated Succssfulyy");
+                                                      "Accounts Updated Succssfulyy");
                                                 }
                                               },
                                               color: Color(0xFF6F35A5),

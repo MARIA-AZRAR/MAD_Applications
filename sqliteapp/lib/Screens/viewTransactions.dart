@@ -199,8 +199,7 @@ class _viewTransactionsState extends State<viewTransactions> {
                             //check account type
                            String accountType = await MoneyDatabase.instance.getSingleAccount(_accountId.text);
                            int? accId;
-                           print("here type");
-                           print(accountType);
+                           
                             try {
                               accId = int.parse(_accountId.text);
                               
@@ -248,7 +247,7 @@ class _viewTransactionsState extends State<viewTransactions> {
                 ),
                 SizedBox(height: screenSize.height * 0.03),
                 Text(
-                  "Accounts",
+                  "Transactions",
                   style: TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 19,
@@ -318,6 +317,8 @@ class _viewTransactionsState extends State<viewTransactions> {
                                   onDoubleTap: () {
                                     setState(() {
                                       _accountId.text = snapshot.data![index].accountId.toString();
+                                      _description.text = snapshot.data![index].description;
+                                      _amount.text = snapshot.data![index].drAmount.toString();
                                     });
                                   },
                                   child: Card(
@@ -365,27 +366,47 @@ class _viewTransactionsState extends State<viewTransactions> {
                                             child: IconButton(
                                               icon: Icon(Icons.edit),
                                               onPressed: () async {
+                                                print("here");
+                                                 String accountType = await MoneyDatabase.instance.getSingleAccount(_accountId.text);
+                                                  int? accId;
+                                                    try {
+                                                      accId = int.parse(_accountId.text);
+                                                      
+                                                    } on FormatException {
+                                                      print("Exception occured");
+                                                   }
                                                 //update
-                                                // var account = Transactions(
-                                                //   id: snapshot
-                                                //       .data![index].id,
-                                                //   title: _title.text,
-                                                //   type: type!,
-                                                // );
-
-                                                // int res = await MoneyDatabase
-                                                //     .instance
-                                                //     .updateAccount(account);
-                                                // setState(() {
-                                                //   _listFuture = MoneyDatabase
-                                                //       .instance
-                                                //       .getAllAccounts();
-                                                // });
-                                                // if (res == 1) {
-                                                //   showAlertDialog(context,
-                                                //       "User Updated Succssfulyy");
-                                                // }
+                                                var transaction = accountType == 'Expense'? Transactions(
+                                                    id: snapshot.data![index].id,
+                                                    accountId: accId!,
+                                                    userId: this.widget.user!.id,
+                                                    description: _description.text,
+                                                    drAmount: _amount.text,
+                                                    transactionDate: snapshot.data![index].transactionDate,
+                                                    type: accountType,
+                                                  ) : Transactions(
+                                                    id: snapshot.data![index].id,
+                                                    accountId: accId!,
+                                                    userId: this.widget.user!.id,
+                                                    description: _description.text,
+                                                    drAmount:  _amount.text,
+                                                    transactionDate: snapshot.data![index].transactionDate,
+                                                    type: accountType,
+                                                    );
+                                               
+                                               print("Updating");
+                                                int res = await MoneyDatabase.instance.updateTransaction(transaction);
+                                                setState(() {
+                                                  _listFuture = MoneyDatabase
+                                                      .instance
+                                                      .getUsersTransactions(this.widget.user!.id);
+                                                });
+                                                if (res == 1) {
+                                                  showAlertDialog(context,
+                                                      "Transaction Updated Succssfulyy");
+                                                }
                                               },
+                                            
                                               color: Color(0xFF6F35A5),
                                             )),
                                       ],
