@@ -29,15 +29,13 @@ import '../models/transaction.dart';
 //     version: 1,
 //   );
 
-   
 // }
 
-
 class MoneyDatabase {
- //instance that is calling our private constructor
+  //instance that is calling our private constructor
   static final MoneyDatabase instance = MoneyDatabase._init();
 
- //pribate constructor can have any name
+  //pribate constructor can have any name
   MoneyDatabase._init();
 
   //field for our database
@@ -52,17 +50,15 @@ class MoneyDatabase {
     // if not created instantiate the db the first time it is accessed
     _database = await _iniDB('money_database.db');
     return _database!;
-  } 
+  }
 
-    _iniDB(String filename) async {
+  _iniDB(String filename) async {
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
     String path = join(documentsDirectory.path, filename);
 
-    return await openDatabase(
-      path, version: 1, 
-      onOpen: (db) {},
-      onCreate: (Database db, int version) async {
-          // Run the CREATE TABLE statement on the database.
+    return await openDatabase(path, version: 1, onOpen: (db) {},
+        onCreate: (Database db, int version) async {
+      // Run the CREATE TABLE statement on the database.
       await db.execute(
         'CREATE TABLE Users(id INTEGER PRIMARY KEY, name TEXT, phone TEXT, password TEXT)',
       );
@@ -78,30 +74,27 @@ class MoneyDatabase {
   void delete() async {
     // Get a location using getDatabasesPath
     Directory documentsDirectory = await getApplicationDocumentsDirectory();
-      String path = join(documentsDirectory.path, 'money_database.db');
+    String path = join(documentsDirectory.path, 'money_database.db');
 
-      // Delete the database
-      await deleteDatabase(path);
-      print("deleted");
-
+    // Delete the database
+    await deleteDatabase(path);
+    print("deleted");
   }
 
-
-    // Define a function that inserts account into the database
+  // Define a function that inserts account into the database
   Future<int> insertUser(User user) async {
     // Get a reference to the database.
     print(user);
-    try{
-    final db = await database;
+    try {
+      final db = await database;
 
-    await db.insert(
-      'Users',
-      user.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    return 1;
-    }
-    catch(exception){
+      await db.insert(
+        'Users',
+        user.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+      return 1;
+    } catch (exception) {
       return 0;
     }
   }
@@ -117,42 +110,41 @@ class MoneyDatabase {
     // Convert the List<Map<String, dynamic> into a List<Users>.
     return List.generate(maps.length, (i) {
       return User(
-        id: maps[i]['id'],
-        name: maps[i]['name'],
-        phone: maps[i]['phone'],
-        password: maps[i]['password']
-      );
+          id: maps[i]['id'],
+          name: maps[i]['name'],
+          phone: maps[i]['phone'],
+          password: maps[i]['password']);
     });
   }
 
-  Future<User?> validateUser(String name, String password) async {  
-    final db = await database;  
-    var response = await db.rawQuery("SELECT * FROM Users WHERE name = '$name' and password = '$password'");  
-      
-    if (response.length > 0) {  
-      return new User.fromMap(response.first);  
+  Future<User?> validateUser(String name, String password) async {
+    final db = await database;
+    var response = await db.rawQuery(
+        "SELECT * FROM Users WHERE name = '$name' and password = '$password'");
+
+    if (response.length > 0) {
+      return new User.fromMap(response.first);
     }
 
     return null;
-  }  
+  }
 
-             //################################### ACCOUNTS #################################
-  
-    // Define a function that inserts account into the database
+  //################################### ACCOUNTS #################################
+
+  // Define a function that inserts account into the database
   Future<int> insertAccount(Accounts account) async {
     // Get a reference to the database.
     print(account);
-    try{
-    final db = await database;
+    try {
+      final db = await database;
 
-    await db.insert(
-      'Accounts',
-      account.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    return 1;
-    }
-    catch(exception){
+      await db.insert(
+        'Accounts',
+        account.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+      return 1;
+    } catch (exception) {
       return 0;
     }
   }
@@ -176,44 +168,46 @@ class MoneyDatabase {
   }
 
 //check if account exists
-  Future<int> validateAccount(String _id) async {  
+  Future<int> validateAccount(String _id) async {
     int? id;
     try {
       id = int.parse(_id);
     } on FormatException {
       print("Exception occured");
     }
-    
-    final db = await database;  
-    var response = await db.rawQuery("SELECT * FROM Accounts WHERE accountId = '$id'");  
 
-    if (response.length > 0) {  
+    final db = await database;
+    var response =
+        await db.rawQuery("SELECT * FROM Accounts WHERE accountId = '$id'");
+
+    if (response.length > 0) {
       print("in here");
       print(response.length);
-       return response.length ;
-    }else{
+      return response.length;
+    } else {
       print("ehy");
-      return response.length ;
+      return response.length;
     }
-  }  
+  }
 
   //check if account exists
-  Future<String> getSingleAccount(String _id) async { 
+  Future<String> getSingleAccount(String _id) async {
     int? id;
     try {
       id = int.parse(_id);
     } on FormatException {
       print("Exception occured");
     }
-     
-    final db = await database;  
-    final List<Map<String, dynamic>> response = await db.rawQuery("SELECT type FROM Accounts WHERE accountId = '$id' limit 1");  
-    if (response.length > 0) {  
+
+    final db = await database;
+    final List<Map<String, dynamic>> response = await db
+        .rawQuery("SELECT type FROM Accounts WHERE accountId = '$id' limit 1");
+    if (response.length > 0) {
       return response[0]['type'];
-    }else{
+    } else {
       return "true";
     }
-  }  
+  }
 
   Future<void> deleteAccount(int id) async {
     final db = await database;
@@ -225,52 +219,50 @@ class MoneyDatabase {
   }
 
   Future<int> updateAccount(Accounts account) async {
-    
-  final db = await database;
-  var res = await db.update(
-    'Accounts',
-    account.toMap(),
-    where: 'accountId = ?',
-    whereArgs: [account.accountId],
-  );
-  return res;
-}
+    final db = await database;
+    var res = await db.update(
+      'Accounts',
+      account.toMap(),
+      where: 'accountId = ?',
+      whereArgs: [account.accountId],
+    );
+    return res;
+  }
 
 //################################## TRANSACTIONS ###########################
-    // Define a function that inserts transaction into the database
+  // Define a function that inserts transaction into the database
   Future<int> insertTransaction(Transactions transaction) async {
     // Get a reference to the database
-    
-    try{
-    final db = await database;
 
-    await db.insert(
-      'Transactions',
-      transaction.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-    return 1;
-    }
-    catch(exception){
+    try {
+      final db = await database;
+
+      await db.insert(
+        'Transactions',
+        transaction.toMap(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      );
+      return 1;
+    } catch (exception) {
       return 0;
     }
   }
-
 
   // A method that retrieves all the accounts from the
   Future<List<Transactions>> getUsersTransactions(int _id) async {
     // Get a reference to the database.
     final db = await database;
 
-    final List<Map<String, dynamic>> maps = await db.rawQuery("SELECT * FROM Transactions where userId = '${_id}'");  
-    
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery("SELECT * FROM Transactions where userId = '${_id}'");
+
     String? amount;
     // Convert the List<Map<String, dynamic> into a List<Users>.
     return List.generate(maps.length, (i) {
-      if(maps[i]['drAmount'] != null){
+      if (maps[i]['drAmount'] != null) {
         print("In here");
-        amount = maps[i]['drAmount']; 
-      }else{
+        amount = maps[i]['drAmount'];
+      } else {
         amount = maps[i]['CrAmount'];
       }
       return Transactions(
@@ -286,24 +278,192 @@ class MoneyDatabase {
   }
 
   Future<int> updateTransaction(Transactions transaction) async {
-    
-  final db = await database;
-  var res = await db.update(
-    'Transactions',
-    transaction.toMap(),
-    where: 'id = ?',
-    whereArgs: [transaction.id],
-  );
-  return res;
-}
+    final db = await database;
+    var res = await db.update(
+      'Transactions',
+      transaction.toMap(),
+      where: 'id = ?',
+      whereArgs: [transaction.id],
+    );
+    return res;
+  }
 
-    Future<void> deleteTransaction(int _id) async {
+  Future<void> deleteTransaction(int _id) async {
     final db = await database;
     await db.delete(
       'Transactions',
       where: "id = ?",
       whereArgs: [_id],
     );
+  }
+
+  //####################################### REPORTS ######################################
+
+  // A method that retrieves aily data from the
+  Future<List<Transactions>> getDailyData(int _id, String _type) async {
+    // Get a reference to the database.
+    final db = await database;
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery("SELECT * FROM Transactions where userId = '${_id}'");
+
+    final now = DateTime.now();
+    DateTime current = DateTime(now.year, now.month, now.day);
+    String? amount;
+
+    List<Transactions> transactionList = [];
+
+    for(int i = 0; i< maps.length; ++i) {
+      if (maps[i]['drAmount'] != null) {
+        amount = maps[i]['drAmount'];
+      } else {
+        amount = maps[i]['CrAmount'];
+      }
+
+      DateTime tranDate =
+          DateTime.fromMillisecondsSinceEpoch(maps[i]['transactionDate']);
+      DateTime prevDate = DateTime(tranDate.year, tranDate.month, tranDate.day);
+
+      if (prevDate == current && maps[i]['type'] == _type) {
+        print("That's Today");
+         transactionList.add(Transactions(
+          id: maps[i]['id'],
+          userId: maps[i]['userId'],
+          accountId: maps[i]['accountId'],
+          description: maps[i]['description'],
+          transactionDate: maps[i]['transactionDate'],
+          type: maps[i]['type'],
+          drAmount: amount,
+        ));
+      }
+    }
+    print(transactionList.length);
+     return transactionList;
+
+  }
+
+  // A method that retrieves monthly data from the
+  Future<List<Transactions>> getMonthlyData(int _id, String _type) async {
+    // Get a reference to the database.
+    final db = await database;
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery("SELECT * FROM Transactions where userId = '${_id}'");
+
+    final now = DateTime.now();
+    DateTime current = DateTime(now.year, now.month);
+    String? amount;
+
+    List<Transactions> transactionList = [];
+
+    for(int i = 0; i< maps.length; ++i) {
+      if (maps[i]['drAmount'] != null) {
+        amount = maps[i]['drAmount'];
+      } else {
+        amount = maps[i]['CrAmount'];
+      }
+
+      DateTime tranDate =
+          DateTime.fromMillisecondsSinceEpoch(maps[i]['transactionDate']);
+      DateTime prevDate = DateTime(tranDate.year, tranDate.month);
+
+      if (prevDate == current && maps[i]['type'] == _type) {
+        print("That's same month");
+         transactionList.add(Transactions(
+          id: maps[i]['id'],
+          userId: maps[i]['userId'],
+          accountId: maps[i]['accountId'],
+          description: maps[i]['description'],
+          transactionDate: maps[i]['transactionDate'],
+          type: maps[i]['type'],
+          drAmount: amount,
+        ));
+      }
+    }
+    print(transactionList.length);
+     return transactionList;
+
+  }
+
+
+    // A method that retrieves all the weekly data from the
+  Future<List<Transactions>> getWeeklyData(int _id, String _type) async {
+    // Get a reference to the database.
+    final db = await database;
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery("SELECT * FROM Transactions where userId = '${_id}'");
+
+    final now = DateTime.now();
+    DateTime current = DateTime(now.year, now.month, now.day);
+    String? amount;
+
+    List<Transactions> transactionList = [];
+
+    for(int i = 0; i< maps.length; ++i) {
+      if (maps[i]['drAmount'] != null) {
+        amount = maps[i]['drAmount'];
+      } else {
+        amount = maps[i]['CrAmount'];
+      }
+
+      DateTime tranDate =  DateTime.fromMillisecondsSinceEpoch(maps[i]['transactionDate']);
+      DateTime prevDate = DateTime(tranDate.year, tranDate.month, tranDate.day);
+
+      if (prevDate.year == current.year && prevDate.month == current.month && (prevDate.day - current.day).abs() <= 7 && maps[i]['type'] == _type) {
+        print("That's same Week");
+         transactionList.add(Transactions(
+          id: maps[i]['id'],
+          userId: maps[i]['userId'],
+          accountId: maps[i]['accountId'],
+          description: maps[i]['description'],
+          transactionDate: maps[i]['transactionDate'],
+          type: maps[i]['type'],
+          drAmount: amount,
+        ));
+      }
+    }
+     print(transactionList.length);
+     return transactionList;
+  }
+
+  // A method that retrieves all the accounts from the
+  Future<List<Transactions>> getYearlyData(int _id, String _type) async {
+    // Get a reference to the database.
+    final db = await database;
+    final List<Map<String, dynamic>> maps =
+        await db.rawQuery("SELECT * FROM Transactions where userId = '${_id}'");
+
+    final now = DateTime.now();
+    DateTime current = DateTime(now.year);
+    String? amount;
+
+    List<Transactions> transactionList = [];
+
+    for(int i = 0; i< maps.length; ++i) {
+      if (maps[i]['drAmount'] != null) {
+        amount = maps[i]['drAmount'];
+      } else {
+        amount = maps[i]['CrAmount'];
+      }
+
+      DateTime tranDate =
+          DateTime.fromMillisecondsSinceEpoch(maps[i]['transactionDate']);
+      DateTime prevDate = DateTime(tranDate.year);
+
+      if (prevDate == current && maps[i]['type'] == _type) {
+        print("That's same year");
+         transactionList.add(Transactions(
+          id: maps[i]['id'],
+          userId: maps[i]['userId'],
+          accountId: maps[i]['accountId'],
+          description: maps[i]['description'],
+          transactionDate: maps[i]['transactionDate'],
+          type: maps[i]['type'],
+          drAmount: amount,
+        ));
+      }
+    }
+    print(transactionList.length);
+     return transactionList;
+
   }
 
 
