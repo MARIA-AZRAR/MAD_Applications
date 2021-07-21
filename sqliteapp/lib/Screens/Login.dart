@@ -99,7 +99,7 @@ class _LoginState extends State<Login> {
                   ),
                 ),
                 onPressed: () async {
-                 // MoneyDatabase.instance.delete();
+                 // MoneyDatabase.instance.delete(); 
                   User? response =
                       await MoneyDatabase.instance.validateUser(name!, password!);
                   if (response != null) {

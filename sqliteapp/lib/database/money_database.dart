@@ -116,7 +116,7 @@ class MoneyDatabase {
           password: maps[i]['password']);
     });
   }
-
+ 
   Future<User?> validateUser(String name, String password) async {
     final db = await database;
     var response = await db.rawQuery(

@@ -6,8 +6,6 @@ import '../Screens/viewTransactions.dart';
 import '../Screens/viewReports.dart';
 
 
-
-
 class Sidebar extends StatelessWidget {
   Sidebar(this.user);
 
