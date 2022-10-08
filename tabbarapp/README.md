@@ -1,6 +1,6 @@
 # tabbarapp
 
-A new Flutter project.
+Flutter project to build a view of video player with slider
 
 ## Getting Started
 
